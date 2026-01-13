@@ -1,0 +1,48 @@
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: .5rem 0;
+    background-color: var(--bg-med-color);
+    color: var(--accent-color-red);
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-title {
+    font-size: clamp(1.5rem, 1rem + 1.5vw, 2rem);
+    font-weight: bold;
+}
+
+.logo-img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.logo-img img {
+    width: 100%;
+    height: 100%;
+    filter: var(--accent-filter-red);
+}
+
+header nav a {
+    color: var(--accent-filter-red);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav a:hover, header nav a:focus {
+    text-decoration: underline;
+}
+
+
+
+@media only screen and (width <= 500px) {
+    .logo-title {
+        display: none;
+    }
+}
