@@ -1,5 +1,6 @@
 import "./App.jsx";
 import App from "./App.jsx";
+import Wordle from "./components/wordle.jsx";
 
 
 
@@ -10,7 +11,7 @@ const routes = [
         children: [
             {
                 index: true,
-                element: <p>Hi</p>
+                element: <Wordle />
             }
         ]
     }
