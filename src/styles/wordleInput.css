@@ -1,0 +1,39 @@
+.wordle-input {
+    width: fit-content;
+    display: flex;
+    gap: .5rem;
+    outline: none;
+    cursor: default;
+    user-select: none;
+}
+
+.wordle-input .input-letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(50px, 45px + 2vw, 70px);
+    height: clamp(50px, 45px + 2vw, 70px);
+    border: 2px solid var(--text-med-color);
+    border-radius: 5px;
+    font-size: clamp(1rem, 1rem + 2vw, 2rem);
+    font-weight: bold;
+    color: var(--text-med-color);
+}
+
+.wordle-input .input-letter.wrong {
+    color: var(--bg-low-color);
+    background-color: var(--text-med-color);
+    border: none;
+}
+
+.wordle-input .input-letter.right-letter {
+    background-color: var(--accent-color-yellow);
+    color: var(--bg-low-color);
+    border: none;
+}
+
+.wordle-input .input-letter.correct {
+    background-color: var(--accent-color-green);
+    color: var(--bg-low-color);
+    border: none;
+}
