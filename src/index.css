@@ -15,10 +15,14 @@ html {
 	--text-high-color: hsl(0, 0%, 100%, 0.87);
 	--text-med-color: hsl(0, 0%, 100%, .60);
 	--text-low-color: hsl(0, 0%, 100%, .38);
+	--bg-highx3-color: hsl(0, 0%, 45%);
+	--bg-highx2-color: hsl(0, 0%, 35%);
 	--bg-high-color: hsl(0, 0%, 25%);
 	--bg-med-color: hsl(0, 0%, 19%);
 	--bg-low-color: hsl(0, 0%, 9%);
 	--accent-color-red: hsl(356, 45%, 52%);
+	--accent-color-yellow: hsl(60, 45%, 52%);
+	--accent-color-green: hsl(120, 45%, 52%);
 
 	--accent-filter-red:
 	brightness(0) 
