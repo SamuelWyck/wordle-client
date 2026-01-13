@@ -14,8 +14,18 @@ function WordleInput({maxLength, active=false, textInfo={}, submitCb}) {
         }
     }, []);
 
+
+    function handleClick() {
+        if (active) {
+            inputRef.current.focus();
+        }
+    };
+
     
     function handleKeyDown(event) {
+        if (!active) {
+            return;
+        }
         if (event.key === "Enter") {
             submitCb(text);
             return;
@@ -66,9 +76,9 @@ function WordleInput({maxLength, active=false, textInfo={}, submitCb}) {
     return (
         <div 
             className="wordle-input" 
-            tabIndex={0} 
+            tabIndex={(active) ? 0 : -1}
             onKeyDown={handleKeyDown}
-            onClick={function() {inputRef.current.focus();}}
+            onClick={handleClick}
             ref={inputRef}
         >
             {letterDivs}
