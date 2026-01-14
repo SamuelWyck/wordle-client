@@ -3,6 +3,7 @@ import WordleInput from "./wordleInput.jsx";
 import {useState, useEffect, useRef} from "react";
 import apiManager from "../utils/apiManager.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
+import WordleKeyboard from "./wordleKeyboard.jsx";
 
 
 
@@ -130,6 +131,7 @@ function Wordle({maxGuesses, wordLength}) {
         <div className="wordle-board">
             {inputs}
         </div>
+        <WordleKeyboard />
     </main>
     );
 };
