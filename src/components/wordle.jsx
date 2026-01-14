@@ -5,27 +5,79 @@ import apiManager from "../utils/apiManager.js";
 
 
 
-function Wordle() {
-    const [inputs, setInputs] = useState(buildInputs());
+function Wordle({maxGuesses, wordLength}) {
+    const [inputs, setInputs] = useState([]);
 
 
     useEffect(function() {
-        apiManager.getWordleGuesses();
+        apiManager.getWordleGuesses().then(function(res) {
+            const wordScores = res.guessScores;
+            setInputs(buildInputs(wordScores));
+        });
     }, []);
 
 
-    function buildInputs() {
+    function buildInputs(wordScores) {
         const inputs = [];
-        for (let i = 0; i < 6; i += 1) {
-            const input = <WordleInput 
-                active={false} maxLength={5} 
-                submitCb={function(val) {console.log(val)}} 
-                key={i}
-            />;
+        let needActiveInput = true;
+        for (let i = 0; i < maxGuesses; i += 1) {
+            const score = (i < wordScores.length) ? wordScores[i] : {};
+            const noScore = i >= wordScores.length;
+            let isActive = false;
+            if (noScore && needActiveInput) {
+                isActive = true;
+                needActiveInput = false;
+            }
+
+            const input = getWordleInput(isActive, i, score);
             inputs.push(input);
         }
         return inputs;
     };
+
+
+    async function guessSubmitCb(inputIndex, foundWord) {
+        if (foundWord) {
+            // make pop saying you won
+            return;
+        }
+        const nextInputIndex = inputIndex + 1;
+        let inputsLength = null;
+        setInputs((inputs) => {
+            inputsLength = inputs.length;
+            return inputs;
+        });
+        if (nextInputIndex === inputsLength) {
+            const res = await apiManager.getWordOfTheDay();
+            // lost game make pop showing word
+            return;
+        }
+
+        setInputs((inputs) => {
+            const modifiedInputs = [];
+            for (let i = 0; i < inputs.length; i += 1) {
+                let input = inputs[i];
+                if (i === nextInputIndex) {
+                    input = getWordleInput(true, i, {});
+                }
+                modifiedInputs.push(input);
+            }
+            return modifiedInputs;
+        });
+    };
+
+
+    function getWordleInput(active, id, wordScore) {
+        const input = <WordleInput 
+            active={active} maxLength={wordLength} 
+            submitCb={guessSubmitCb} 
+            key={String(active) + String(id)}
+            wordScore={wordScore}
+            id={id}
+        />;
+        return input;
+    };
+
 
     return (
     <main className="wordle-main">
