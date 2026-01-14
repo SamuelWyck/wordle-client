@@ -11,11 +11,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: clamp(50px, 45px + 2vw, 65px);
-    height: clamp(50px, 45px + 2vw, 65px);
+    width: clamp(50px, 40px + 1vw, 65px);
+    height: clamp(50px, 40px + 1vw, 65px);
     border: 2px solid var(--text-med-color);
     border-radius: 5px;
-    font-size: clamp(1rem, 1rem + 2vw, 2rem);
+    font-size: clamp(1rem, .6rem + 2vw, 2rem);
     font-weight: bold;
     color: var(--text-med-color);
 }
