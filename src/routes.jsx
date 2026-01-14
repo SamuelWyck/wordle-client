@@ -11,7 +11,7 @@ const routes = [
         children: [
             {
                 index: true,
-                element: <Wordle />
+                element: <Wordle maxGuesses={6} wordLength={5}/>
             }
         ]
     }
