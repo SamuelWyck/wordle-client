@@ -15,7 +15,8 @@ html {
 	--text-high-color: hsl(0, 0%, 100%, 0.87);
 	--text-med-color: hsl(0, 0%, 100%, .60);
 	--text-low-color: hsl(0, 0%, 100%, .38);
-	--bg-highx3-color: hsl(0, 0%, 45%);
+	--bg-highx4-color: hsl(0, 0%, 65%);
+	--bg-highx3-color: hsl(0, 0%, 55%);
 	--bg-highx2-color: hsl(0, 0%, 35%);
 	--bg-high-color: hsl(0, 0%, 25%);
 	--bg-med-color: hsl(0, 0%, 19%);
