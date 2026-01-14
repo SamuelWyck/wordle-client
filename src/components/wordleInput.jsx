@@ -1,33 +1,39 @@
 import "../styles/wordleInput.css";
 import { useState, useEffect, useRef } from "react";
+import apiManager from "../utils/apiManager.js";
 
 
 
-function WordleInput({maxLength, active=false, textInfo={}, submitCb}) {
+function WordleInput({maxLength, active=false, wordScore={}, submitCb, id}) {
+    const [letterDivs, setLetterDivs] = useState(buildLetterDivs(wordScore));
     const [text, setText] = useState("");
+    const [isActive, setIsActive] = useState(active);
     const inputRef = useRef(null);
 
 
     useEffect(function() {
-        if (active) {
+        if (isActive) {
             inputRef.current.focus();
         }
     }, []);
 
 
     function handleClick() {
-        if (active) {
+        if (isActive) {
             inputRef.current.focus();
         }
     };
 
     
     function handleKeyDown(event) {
-        if (!active) {
+        if (!isActive) {
             return;
         }
         if (event.key === "Enter") {
-            submitCb(text);
+            if (text.length === maxLength) {
+                submitWord();
+                setIsActive(false);
+            }
             return;
         }
         if (text.length === maxLength && event.key !== "Backspace") {
@@ -37,19 +43,30 @@ function WordleInput({maxLength, active=false, textInfo={}, submitCb}) {
             return;
         }
 
-        let newText = null;
-        let divIndex = null;
         if (event.key === "Backspace") {
-            newText = text.slice(0, text.length - 1);
-            divIndex = text.length - 1;
+            setText(text.slice(0, text.length - 1));
+            const targetIndex = text.length - 1;
+            updateLetterDiv(targetIndex, "");
         } else if (isLetter(event.key)) {
-            newText = text + event.key.toUpperCase();
-            divIndex = text.length;
+            setText(text + event.key.toLowerCase());
+            const targetIndex = text.length;
+            updateLetterDiv(targetIndex, event.key.toUpperCase());
         }
-        
-        if (newText !== null) {
-            setText(newText);
-        }
+    };
+
+
+    function updateLetterDiv(targetIndex, letter) {
+        setLetterDivs((letterDivs) => {
+            const modifiedDivs = [];
+            for (let i = 0; i < letterDivs.length; i += 1) {
+                let div = letterDivs[i];
+                if (i === targetIndex) {
+                    div = getLetterDiv(i, "", letter);
+                }
+                modifiedDivs.push(div);
+            }
+            return modifiedDivs;
+        });
     };
 
 
@@ -62,16 +79,58 @@ function WordleInput({maxLength, active=false, textInfo={}, submitCb}) {
     };
 
 
-    function buildLetterDivs() {
+    function buildLetterDivs(wordScore) {
         const letterDivs = [];
+        const scoreClasses = {0: "wrong", 1: "right-letter", 2: "correct"};
         for (let i = 0; i < maxLength; i += 1) {
-            const div = <div className="input-letter" key={i}><p>{text.at(i) || ""}</p></div>;
+            const letterScore = wordScore[i];
+            let letter = "";
+            let scoreClass = "";
+            if (letterScore) {
+                letter = letterScore.char.toUpperCase();
+                scoreClass = ` ${scoreClasses[letterScore.charScore]}`;
+            }
+            const div = getLetterDiv(i, scoreClass, letter);
             letterDivs.push(div);
         }
         return letterDivs;
     };
 
-    const letterDivs = buildLetterDivs();
+
+    function getLetterDiv(id, scoreClass, letter) {
+        const div = <div 
+            className={`input-letter${scoreClass}`} 
+            key={id}
+        ><p>{letter}</p></div>;
+        return div;
+    };
+
+
+    async function submitWord() {
+        const res = await apiManager.makeWordleGuess(text);
+        if (res.errors) {
+            setIsActive(true);
+            return;
+        }
+        if (!res.validWord) {
+            setIsActive(true);
+            // make popup
+            return;
+        }
+        const wordScore = res.score;
+        setLetterDivs(buildLetterDivs(wordScore));
+        let foundWord = true;
+        for (let key in wordScore) {
+            const letterInfo = wordScore[key];
+            const letterScore = letterInfo.charScore;
+            if (letterScore !== 2) {
+                foundWord = false;
+                break;
+            }
+        }
+        submitCb(id, foundWord);
+    };
+
 
     return (
         <div 
