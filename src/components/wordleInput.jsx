@@ -4,7 +4,7 @@ import apiManager from "../utils/apiManager.js";
 
 
 
-function WordleInput({maxLength, active=false, wordScore={}, submitCb, id}) {
+function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popupRef}) {
     const [letterDivs, setLetterDivs] = useState(buildLetterDivs(wordScore));
     const [text, setText] = useState("");
     const [isActive, setIsActive] = useState(active);
@@ -110,11 +110,12 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id}) {
         const res = await apiManager.makeWordleGuess(text);
         if (res.errors) {
             setIsActive(true);
+            popupRef.current.showMessage("Error submitting word.", false);
             return;
         }
         if (!res.validWord) {
             setIsActive(true);
-            // make popup
+            popupRef.current.showMessage("Word is not in the list.");
             return;
         }
         const wordScore = res.score;
