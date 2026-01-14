@@ -19,7 +19,7 @@ function Wordle({maxGuesses, wordLength}) {
 
     function buildInputs(wordScores) {
         const inputs = [];
-        let needActiveInput = true;
+        let needActiveInput = !checkGameOver(wordScores);
         for (let i = 0; i < maxGuesses; i += 1) {
             const score = (i < wordScores.length) ? wordScores[i] : {};
             const noScore = i >= wordScores.length;
@@ -33,6 +33,24 @@ function Wordle({maxGuesses, wordLength}) {
             inputs.push(input);
         }
         return inputs;
+    };
+
+
+    function checkGameOver(wordScores) {
+        for (let wordScore of wordScores) {
+            let gameOver = true;
+            for (let key in wordScore) {
+                const letterInfo = wordScore[key];
+                if (letterInfo.charScore !== 2) {
+                    gameOver = false;
+                    break;
+                }
+            }
+            if (gameOver) {
+                return true;
+            }
+        }
+        return false;
     };
 
 
