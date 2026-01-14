@@ -1,0 +1,38 @@
+.wordle-popup {
+    position: absolute;
+    background-color: var(--accent-color-red);
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    color: var(--bg-low-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.wordle-popup.fade-out {
+    animation-name: fade-out;
+    animation-delay: .5s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+}
+
+.wordle-popup button {
+    background: none;
+    border: none;
+    display: flex;
+    padding: .2rem 0 .2rem .2rem;
+    width: 25px;
+    cursor: pointer;
+}
+
+.wordle-popup button img {
+    width: 100%;
+}
+
+
+@keyframes fade-out {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
