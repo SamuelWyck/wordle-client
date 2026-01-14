@@ -1,0 +1,47 @@
+.wordle-keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(.2rem, .1rem + 1vw, .6rem);
+}
+
+.wordle-keyboard-keys {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(.2rem, .1rem + 1vw, .6rem);
+    width: 100%;
+}
+
+.w-keyboard-key {
+    border: 2px solid var(--text-med-color);
+    border-radius: 5px;
+    font-size: clamp(.8rem, .5rem + .6vw, 1.4rem);
+    cursor: pointer;
+    color: var(--text-med-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(40px, 30px + 1vw, 51px);
+    height: clamp(55px, 45px + 1vw, 65px);
+    flex-shrink: 0;
+}
+
+.w-keyboard-key.enter {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    font-size: clamp(.6rem, .3rem + 1vw, 1.1rem);
+}
+
+.w-keyboard-key.backspace {
+    flex-basis: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    --filter: invert(100%) opacity(.6);
+}
+
+.w-keyboard-key.backspace img {
+    width: 35%;
+    filter: var(--filter);
+}
