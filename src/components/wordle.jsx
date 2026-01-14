@@ -1,25 +1,42 @@
 import "../styles/wordle.css";
 import WordleInput from "./wordleInput.jsx";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import apiManager from "../utils/apiManager.js";
+import WordleMsgPopup from "./wordlePopup.jsx";
 
 
 
 function Wordle({maxGuesses, wordLength}) {
     const [inputs, setInputs] = useState([]);
-
+    const popupRef = useRef(null);
 
     useEffect(function() {
         apiManager.getWordleGuesses().then(function(res) {
+            if (res.errors) {
+                popupRef.current.showMessage("Error connecting to server.", false);
+                return;
+            }
             const wordScores = res.guessScores;
-            setInputs(buildInputs(wordScores));
+            const gameOver = checkGameOver(wordScores);
+            setInputs(buildInputs(wordScores, gameOver));
+
+            if (gameOver) {
+                apiManager.getWordOfTheDay().then(function(res) {
+                    if (res.errors) {
+                        popupRef.current.showMessage("Error getting word.", false);
+                        return;
+                    }
+                    const word = res.wordOfTheDay;
+                    popupRef.current.showMessage(word.toUpperCase(), false);
+                });
+            }
         });
     }, []);
 
 
-    function buildInputs(wordScores) {
+    function buildInputs(wordScores, gameOver) {
         const inputs = [];
-        let needActiveInput = !checkGameOver(wordScores);
+        let needActiveInput = (gameOver) ? false : true;
         for (let i = 0; i < maxGuesses; i += 1) {
             const score = (i < wordScores.length) ? wordScores[i] : {};
             const noScore = i >= wordScores.length;
@@ -37,6 +54,10 @@ function Wordle({maxGuesses, wordLength}) {
 
 
     function checkGameOver(wordScores) {
+        if (wordScores.length === maxGuesses) {
+            return true;
+        }
+        
         for (let wordScore of wordScores) {
             let gameOver = true;
             for (let key in wordScore) {
@@ -56,7 +77,7 @@ function Wordle({maxGuesses, wordLength}) {
 
     async function guessSubmitCb(inputIndex, foundWord) {
         if (foundWord) {
-            // make pop saying you won
+            popupRef.current.showMessage("Great job! You won!", false);
             return;
         }
         const nextInputIndex = inputIndex + 1;
@@ -67,7 +88,12 @@ function Wordle({maxGuesses, wordLength}) {
         });
         if (nextInputIndex === inputsLength) {
             const res = await apiManager.getWordOfTheDay();
-            // lost game make pop showing word
+            if (res.errors) {
+                popupRef.current.showMessage("Error getting word.", false);
+            } else {
+                const word = res.wordOfTheDay;
+                popupRef.current.showMessage(`The word was ${word.toUpperCase()}`, false);
+            }
             return;
         }
 
@@ -92,6 +118,7 @@ function Wordle({maxGuesses, wordLength}) {
             key={String(active) + String(id)}
             wordScore={wordScore}
             id={id}
+            popupRef={popupRef}
         />;
         return input;
     };
@@ -99,6 +126,7 @@ function Wordle({maxGuesses, wordLength}) {
 
     return (
     <main className="wordle-main">
+        <WordleMsgPopup ref={popupRef} />
         <div className="wordle-board">
             {inputs}
         </div>
