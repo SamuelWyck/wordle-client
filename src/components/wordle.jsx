@@ -43,6 +43,11 @@ function Wordle({maxGuesses, wordLength}) {
             if (!showingRulesRef.current) {
                 return;
             }
+            const target = (event.target.matches(".show-wordle-rules")) 
+            ? event.target : event.target.parentElement;
+            if (target.matches(".show-wordle-rules")) {
+                return;
+            }
             const elements = document.elementsFromPoint(event.clientX, event.clientY);
             for (let ele of elements) {
                 if (ele.classList.contains("wordle-rules-popup")) {
