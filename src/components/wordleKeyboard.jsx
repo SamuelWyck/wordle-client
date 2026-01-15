@@ -1,9 +1,16 @@
 import "../styles/wordleKeyboard.css";
 import backImg from "../assets/backspace-outline.svg";
+import { useEffect } from "react";
+import colorWordleKeyboardKeys from "../utils/colorWordleKeyboardKeys.js";
 
 
 
-function WordleKeyboard() {
+function WordleKeyboard({wordScores}) {
+
+    useEffect(function() {
+        colorWordleKeyboardKeys(wordScores);
+    }, [wordScores]);
+
     return (
     <div className="wordle-keyboard">
         <div className="wordle-keyboard-keys">
