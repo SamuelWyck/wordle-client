@@ -6,16 +6,58 @@ import apiManager from "../utils/apiManager.js";
 
 function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popupRef}) {
     const [letterDivs, setLetterDivs] = useState(buildLetterDivs(wordScore));
-    const [text, setText] = useState("");
     const [isActive, setIsActive] = useState(active);
+    const activeRef = useRef(active);
+    const textRef = useRef("");
     const inputRef = useRef(null);
 
 
     useEffect(function() {
-        if (isActive) {
+        if (activeRef.current) {
             inputRef.current.focus();
         }
+
+        function keyboardHandler(event) {
+            if (!activeRef.current) {
+                return;
+            }
+            const target = (event.target.matches(".w-keyboard-key")) ? event.target : event.target.parentElement;
+            if (!target.matches(".w-keyboard-key")) {
+                return;
+            }
+            const key = target.dataset.key;
+            if (!isValidKey(key)) {
+                return;
+            }
+            updateKeyboardKeyClass(key);
+            updateText(key);
+        };
+
+        function focusClickHandler() {
+            if (activeRef.current) {
+                inputRef.current.focus();
+            }
+        };
+
+        document.addEventListener("click", focusClickHandler);
+        const keyboard = document.querySelector(".wordle-keyboard");
+        keyboard.addEventListener("click", keyboardHandler);
+
+        return function() {
+            document.removeEventListener("click", focusClickHandler);
+            keyboard.removeEventListener("click", keyboardHandler);
+        }
     }, []);
+
+
+    function updateKeyboardKeyClass(letter) {
+        const allKeys = document.querySelectorAll(".w-keyboard-key");
+        const targetKey = document.querySelector(`.w-keyboard-key[data-key="${letter}"]`);
+        for (let key of allKeys) {
+            key.classList.remove("pressed");
+        }
+        targetKey.classList.add("pressed");
+    };
 
 
     function handleClick() {
@@ -24,34 +66,48 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
         }
     };
 
+
+    function updateText(key) {
+        const text = textRef.current;
+        if (text.length === maxLength && key !== "Backspace" && key !== "Enter") {
+            return;
+        }
+        if (text.length === 0 && key === "Backspace") {
+            return;
+        }
+
+        if (key === "Enter") {
+            if (text.length === maxLength) {
+                submitWord();
+                updateActive(false);
+            }
+        } else if (key === "Backspace") {
+            const targetIndex = text.length - 1;
+            textRef.current = text.slice(0, text.length - 1);
+            updateLetterDiv(targetIndex, "");
+        } else {
+            const targetIndex = text.length;
+            textRef.current = text + key;
+            updateLetterDiv(targetIndex, key.toUpperCase());
+        }
+    };
+
     
     function handleKeyDown(event) {
         if (!isActive) {
             return;
         }
-        if (event.key === "Enter") {
-            if (text.length === maxLength) {
-                submitWord();
-                setIsActive(false);
-            }
+        if (!isValidKey(event.key)) {
             return;
         }
-        if (text.length === maxLength && event.key !== "Backspace") {
-            return;
-        }
-        if (text.length === 0 && event.key === "Backspace") {
-            return;
-        }
+        updateKeyboardKeyClass(event.key);
+        updateText(event.key);
+    };
 
-        if (event.key === "Backspace") {
-            setText(text.slice(0, text.length - 1));
-            const targetIndex = text.length - 1;
-            updateLetterDiv(targetIndex, "");
-        } else if (isLetter(event.key)) {
-            setText(text + event.key.toLowerCase());
-            const targetIndex = text.length;
-            updateLetterDiv(targetIndex, event.key.toUpperCase());
-        }
+
+    function updateActive(active) {
+        activeRef.current = active;
+        setIsActive(active);
     };
 
 
@@ -70,12 +126,11 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
     };
 
 
-    function isLetter(string) {
-        if (string.length !== 1) {
-            return false;
-        }
-        const lettersSet = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        return lettersSet.has(string.toUpperCase());
+    function isValidKey(key) {
+        const validKeySet = new Set("abcdefghijklmnopqrstuvwxyz");
+        validKeySet.add("Enter");
+        validKeySet.add("Backspace");
+        return validKeySet.has(key);
     };
 
 
@@ -107,14 +162,16 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
 
 
     async function submitWord() {
-        const res = await apiManager.makeWordleGuess(text);
+        const res = await apiManager.makeWordleGuess(textRef.current);
         if (res.errors) {
-            setIsActive(true);
+            updateActive(true);
+            inputRef.current.focus();
             popupRef.current.showMessage("Error submitting word.", false);
             return;
         }
         if (!res.validWord) {
-            setIsActive(true);
+            updateActive(true);
+            inputRef.current.focus();
             popupRef.current.showMessage("Word is not in the list.");
             return;
         }
