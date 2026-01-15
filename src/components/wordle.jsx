@@ -38,6 +38,28 @@ function Wordle({maxGuesses, wordLength}) {
                 });
             }
         });
+
+        function closeRulesPopup(event) {
+            if (!showingRulesRef.current) {
+                return;
+            }
+            const elements = document.elementsFromPoint(event.clientX, event.clientY);
+            for (let ele of elements) {
+                if (ele.classList.contains("wordle-rules-popup")) {
+                    return;
+                }
+            }
+
+            const popup = document.querySelector(".wordle-rules-popup");
+            popup.classList.add("hidden");
+            toggleShowingRulesRef();
+        };
+
+        document.addEventListener("click", closeRulesPopup);
+
+        return function() {
+            document.removeEventListener("click", closeRulesPopup);
+        };
     }, []);
 
 
