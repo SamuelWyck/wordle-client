@@ -10,6 +10,7 @@ import WordleKeyboard from "./wordleKeyboard.jsx";
 function Wordle({maxGuesses, wordLength}) {
     const [inputs, setInputs] = useState([]);
     const popupRef = useRef(null);
+    const [pastGuesses, setPastGuesses] = useState([]);
 
     useEffect(function() {
         apiManager.getWordleGuesses().then(function(res) {
@@ -19,6 +20,7 @@ function Wordle({maxGuesses, wordLength}) {
             }
             const wordScores = res.guessScores;
             const gameOver = checkGameOver(wordScores);
+            setPastGuesses(wordScores);
             setInputs(buildInputs(wordScores, gameOver));
 
             if (gameOver) {
@@ -131,7 +133,7 @@ function Wordle({maxGuesses, wordLength}) {
         <div className="wordle-board">
             {inputs}
         </div>
-        <WordleKeyboard />
+        <WordleKeyboard wordScores={pastGuesses} />
     </main>
     );
 };
