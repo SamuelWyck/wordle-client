@@ -53,6 +53,27 @@
     border-color: var(--accent-color-red);
 }
 
-.w-keyboard-key.backspace.pressed {
+.w-keyboard-key.backspace.pressed, 
+.w-keyboard-key.backspace.wrong,
+.w-keyboard-key.backspace.right-letter,
+.w-keyboard-key.backspace.correct {
     --filter: var(--bg-low-filter);
+}
+
+.w-keyboard-key.wrong {
+    color: var(--bg-low-color);
+    background-color: var(--text-med-color);
+    border: none;
+}
+
+.w-keyboard-key.right-letter {
+    color: var(--bg-low-color);
+    background-color: var(--accent-color-yellow);
+    border: none;
+}
+
+.w-keyboard-key.correct {
+    color: var(--bg-low-color);
+    background-color: var(--accent-color-green);
+    border: none;
 }
