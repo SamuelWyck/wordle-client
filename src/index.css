@@ -34,4 +34,14 @@ html {
 	hue-rotate(307deg) 
 	brightness(91%) 
 	contrast(86%);
+
+	--bg-low-filter:
+	brightness(0) 
+	saturate(100%) 
+	invert(0%) 
+	sepia(2%) 
+	saturate(5744%) 
+	hue-rotate(60deg) 
+	brightness(130%) 
+	contrast(82%);
 }
