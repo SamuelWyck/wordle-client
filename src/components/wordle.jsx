@@ -4,11 +4,12 @@ import {useState, useEffect, useRef} from "react";
 import apiManager from "../utils/apiManager.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
 import WordleKeyboard from "./wordleKeyboard.jsx";
+import LoadingElement from "./loadingElement.jsx";
 
 
 
 function Wordle({maxGuesses, wordLength}) {
-    const [inputs, setInputs] = useState([]);
+    const [inputs, setInputs] = useState(null);
     const popupRef = useRef(null);
     const [pastGuesses, setPastGuesses] = useState([]);
 
@@ -125,6 +126,11 @@ function Wordle({maxGuesses, wordLength}) {
         />;
         return input;
     };
+
+
+    if (!inputs) {
+        return <LoadingElement><WordleMsgPopup ref={popupRef}/></LoadingElement>;
+    }
 
 
     return (
