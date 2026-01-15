@@ -1,6 +1,7 @@
 import "../styles/wordleInput.css";
 import { useState, useEffect, useRef } from "react";
 import apiManager from "../utils/apiManager.js";
+import colorWordleKeyboardKeys from "../utils/colorWordleKeyboardKeys.js";
 
 
 
@@ -177,6 +178,7 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
         }
         const wordScore = res.score;
         setLetterDivs(buildLetterDivs(wordScore));
+        colorWordleKeyboardKeys([wordScore]);
         let foundWord = true;
         for (let key in wordScore) {
             const letterInfo = wordScore[key];
