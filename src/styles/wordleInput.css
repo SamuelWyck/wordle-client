@@ -18,22 +18,124 @@
     font-size: clamp(1rem, .6rem + 1.5vw, 2rem);
     font-weight: bold;
     color: var(--text-med-color);
+    background-color: var(--bg-low-color);
 }
 
 .wordle-input .input-letter.wrong {
     color: var(--bg-low-color);
     background-color: var(--text-med-color);
     border: none;
+
+    will-change: transform;
+    animation-name: wrong-flip;
+    animation-duration: 1s;
+    animation-fill-mode: backwards;
+    animation-timing-function: linear;
 }
 
 .wordle-input .input-letter.right-letter {
     background-color: var(--accent-color-yellow);
     color: var(--bg-low-color);
     border: none;
+
+    will-change: transform;
+    animation-name: right-letter-flip;
+    animation-duration: 1s;
+    animation-fill-mode: backwards;
+    animation-timing-function: linear;
 }
 
 .wordle-input .input-letter.correct {
     background-color: var(--accent-color-green);
     color: var(--bg-low-color);
     border: none;
+
+    will-change: transform;
+    animation-name: correct-flip;
+    animation-duration: 1s;
+    animation-fill-mode: backwards;
+    animation-timing-function: linear;
+}
+
+
+
+@keyframes wrong-flip {
+    0% {
+        border: 2px solid var(--text-med-color);
+        color: var(--text-med-color);
+        background-color: var(--bg-low-color);
+        transform: rotateX(0) perspective(10px);
+    }
+    50% {
+        border: 2px solid var(--text-med-color);
+        color: var(--text-med-color);
+        background-color: var(--bg-low-color);
+        transform: rotateX(-90deg) perspective(10px);
+    }
+    51% {
+        color: var(--bg-low-color);
+        background-color: var(--text-med-color);
+        border: none;
+        transform: rotateX(-90deg) perspective(10px);
+    }
+    100% {
+        color: var(--bg-low-color);
+        background-color: var(--text-med-color);
+        border: none;
+        transform: rotateX(0deg) perspective(10px);
+    }
+}
+
+@keyframes right-letter-flip {
+    0% {
+        border: 2px solid var(--text-med-color);
+        color: var(--text-med-color);
+        background-color: var(--bg-low-color);
+        transform: rotateX(0) perspective(10px);
+    }
+    50% {
+        border: 2px solid var(--text-med-color);
+        color: var(--text-med-color);
+        background-color: var(--bg-low-color);
+        transform: rotateX(-90deg) perspective(10px);
+    }
+    51% {
+        color: var(--bg-low-color);
+        background-color: var(--accent-color-yellow);
+        border: none;
+        transform: rotateX(-90deg) perspective(10px);
+    }
+    100% {
+        color: var(--bg-low-color);
+        background-color: var(--accent-color-yellow);
+        border: none;
+        transform: rotateX(0deg) perspective(10px);
+    }
+}
+
+@keyframes correct-flip {
+    0% {
+        border: 2px solid var(--text-med-color);
+        color: var(--text-med-color);
+        background-color: var(--bg-low-color);
+        transform: rotateX(0) perspective(10px);
+    }
+    50% {
+        border: 2px solid var(--text-med-color);
+        color: var(--text-med-color);
+        background-color: var(--bg-low-color);
+        transform: rotateX(-90deg) perspective(10px);
+    }
+    51% {
+        background-color: var(--accent-color-green);
+        color: var(--bg-low-color);
+        border: none;
+        transform: rotateX(-90deg) perspective(10px);
+    }
+    100% {
+        background-color: var(--accent-color-green);
+        color: var(--bg-low-color);
+        border: none;
+        transform: rotateX(0deg) perspective(10px);
+    }
 }
