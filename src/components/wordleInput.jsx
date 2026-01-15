@@ -5,7 +5,7 @@ import colorWordleKeyboardKeys from "../utils/colorWordleKeyboardKeys.js";
 
 
 
-function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popupRef}) {
+function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popupRef, showingRulesRef}) {
     const [letterDivs, setLetterDivs] = useState(buildLetterDivs(wordScore));
     const [isActive, setIsActive] = useState(active);
     const activeRef = useRef(active);
@@ -20,6 +20,9 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
 
         function keyboardHandler(event) {
             if (!activeRef.current) {
+                return;
+            }
+            if (showingRulesRef.current) {
                 return;
             }
             const target = (event.target.matches(".w-keyboard-key")) ? event.target : event.target.parentElement;
@@ -96,6 +99,9 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
     
     function handleKeyDown(event) {
         if (!isActive) {
+            return;
+        }
+        if (showingRulesRef.current) {
             return;
         }
         if (!isValidKey(event.key)) {
