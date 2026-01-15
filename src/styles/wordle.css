@@ -13,4 +13,26 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    position: relative;
+}
+
+.show-wordle-rules {
+    position: absolute;
+    top: -12%;
+    right: 1%;
+    width: 35px;
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.show-wordle-rules img {
+    width: 100%;
+    filter: invert() opacity(.6);
+}
+
+.show-wordle-rules:hover, .show-wordle-rules:focus {
+    background-color: var(--bg-med-color);
 }
