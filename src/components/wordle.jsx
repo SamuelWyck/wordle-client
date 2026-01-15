@@ -178,6 +178,7 @@ function Wordle({maxGuesses, wordLength}) {
 
     return (
     <main className="wordle-main">
+        <title>brain games: wordle</title>
         <WordleMsgPopup ref={popupRef} />
         <WordleRulesPopup closeCb={toggleShowingRulesRef} />
         <div className="wordle-board">
