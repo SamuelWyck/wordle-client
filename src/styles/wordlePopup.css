@@ -9,6 +9,7 @@
     align-items: center;
     gap: .5rem;
     top: clamp(2%, 1.5% + 1vw, 5%);
+    z-index: 1;
 }
 
 .wordle-popup.fade-out {
