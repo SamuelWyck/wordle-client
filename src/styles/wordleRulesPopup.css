@@ -1,0 +1,68 @@
+.wordle-rules-popup {
+    position: absolute;
+    background-color: var(--bg-high-color);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem;
+    color: var(--text-med-color);
+    top: 5%;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.wordle-rules-popup .exit-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.wordle-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.wordle-rules ul {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.wordle-rules li {
+    width: clamp(30ch, 25ch + 2vw, 45ch);
+}
+
+.examples-title, .wordle-rules-popup .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.examples-title {
+    margin-top: .5rem;
+}
+
+.example-img-wrapper {
+    width: min(250px, 100%);
+}
+
+.example-img-wrapper img {
+    width: 100%;
+}
+
+.wordle-rules-popup button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    display: flex;
+}
+
+.wordle-rules-popup button img {
+    filter: invert() opacity(.6);
+}
+
+.wordle-rules-popup.hidden {
+    display: none;
+}
