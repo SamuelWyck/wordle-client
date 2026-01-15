@@ -5,6 +5,8 @@ import apiManager from "../utils/apiManager.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
 import WordleKeyboard from "./wordleKeyboard.jsx";
 import LoadingElement from "./loadingElement.jsx";
+import WordleRulesPopup from "./wordleRulesPopup.jsx";
+import helpImg from "../assets/help.svg";
 
 
 
@@ -12,6 +14,7 @@ function Wordle({maxGuesses, wordLength}) {
     const [inputs, setInputs] = useState(null);
     const popupRef = useRef(null);
     const [pastGuesses, setPastGuesses] = useState([]);
+    const showingRulesRef = useRef(false);
 
     useEffect(function() {
         apiManager.getWordleGuesses().then(function(res) {
@@ -123,8 +126,21 @@ function Wordle({maxGuesses, wordLength}) {
             wordScore={wordScore}
             id={id}
             popupRef={popupRef}
+            showingRulesRef={showingRulesRef}
         />;
         return input;
+    };
+
+
+    function showWordleRules() {
+        const popup = document.querySelector(".wordle-rules-popup");
+        popup.classList.remove("hidden");
+        toggleShowingRulesRef();
+    };
+
+
+    function toggleShowingRulesRef() {
+        showingRulesRef.current = !showingRulesRef.current;
     };
 
 
@@ -136,7 +152,11 @@ function Wordle({maxGuesses, wordLength}) {
     return (
     <main className="wordle-main">
         <WordleMsgPopup ref={popupRef} />
+        <WordleRulesPopup closeCb={toggleShowingRulesRef} />
         <div className="wordle-board">
+            <button className="show-wordle-rules" onClick={showWordleRules}>
+                <img src={helpImg} alt="help" />
+            </button>
             {inputs}
         </div>
         <WordleKeyboard wordScores={pastGuesses} />
