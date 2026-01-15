@@ -7,38 +7,38 @@ function WordleKeyboard() {
     return (
     <div className="wordle-keyboard">
         <div className="wordle-keyboard-keys">
-            <div className="w-keyboard-key">Q</div>
-            <div className="w-keyboard-key">W</div>
-            <div className="w-keyboard-key">E</div>
-            <div className="w-keyboard-key">R</div>
-            <div className="w-keyboard-key">T</div>
-            <div className="w-keyboard-key">Y</div>
-            <div className="w-keyboard-key">U</div>
-            <div className="w-keyboard-key">I</div>
-            <div className="w-keyboard-key">O</div>
-            <div className="w-keyboard-key">P</div>
+            <div className="w-keyboard-key" data-key={"q"}>Q</div>
+            <div className="w-keyboard-key" data-key={"w"}>W</div>
+            <div className="w-keyboard-key" data-key={"e"}>E</div>
+            <div className="w-keyboard-key" data-key={"r"}>R</div>
+            <div className="w-keyboard-key" data-key={"t"}>T</div>
+            <div className="w-keyboard-key" data-key={"y"}>Y</div>
+            <div className="w-keyboard-key" data-key={"u"}>U</div>
+            <div className="w-keyboard-key" data-key={"i"}>I</div>
+            <div className="w-keyboard-key" data-key={"o"}>O</div>
+            <div className="w-keyboard-key" data-key={"p"}>P</div>
         </div>
         <div className="wordle-keyboard-keys">
-            <div className="w-keyboard-key">A</div>
-            <div className="w-keyboard-key">S</div>
-            <div className="w-keyboard-key">D</div>
-            <div className="w-keyboard-key">F</div>
-            <div className="w-keyboard-key">G</div>
-            <div className="w-keyboard-key">H</div>
-            <div className="w-keyboard-key">J</div>
-            <div className="w-keyboard-key">K</div>
-            <div className="w-keyboard-key">L</div>
+            <div className="w-keyboard-key" data-key={"a"}>A</div>
+            <div className="w-keyboard-key" data-key={"s"}>S</div>
+            <div className="w-keyboard-key" data-key={"d"}>D</div>
+            <div className="w-keyboard-key" data-key={"f"}>F</div>
+            <div className="w-keyboard-key" data-key={"g"}>G</div>
+            <div className="w-keyboard-key" data-key={"h"}>H</div>
+            <div className="w-keyboard-key" data-key={"j"}>J</div>
+            <div className="w-keyboard-key" data-key={"k"}>K</div>
+            <div className="w-keyboard-key" data-key={"l"}>L</div>
         </div>
         <div className="wordle-keyboard-keys">
-            <div className="w-keyboard-key enter">ENTER</div>
-            <div className="w-keyboard-key">Z</div>
-            <div className="w-keyboard-key">X</div>
-            <div className="w-keyboard-key">C</div>
-            <div className="w-keyboard-key">V</div>
-            <div className="w-keyboard-key">B</div>
-            <div className="w-keyboard-key">N</div>
-            <div className="w-keyboard-key">M</div>
-            <div className="w-keyboard-key backspace">
+            <div className="w-keyboard-key enter" data-key={"Enter"}>ENTER</div>
+            <div className="w-keyboard-key" data-key={"z"}>Z</div>
+            <div className="w-keyboard-key" data-key={"x"}>X</div>
+            <div className="w-keyboard-key" data-key={"c"}>C</div>
+            <div className="w-keyboard-key" data-key={"v"}>V</div>
+            <div className="w-keyboard-key" data-key={"b"}>B</div>
+            <div className="w-keyboard-key" data-key={"n"}>N</div>
+            <div className="w-keyboard-key" data-key={"m"}>M</div>
+            <div className="w-keyboard-key backspace" data-key={"Backspace"}>
                 <img src={backImg} alt="backspace" />
             </div>
         </div>
