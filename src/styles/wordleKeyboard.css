@@ -46,3 +46,13 @@
     width: 35%;
     filter: var(--filter);
 }
+
+.w-keyboard-key.pressed {
+    background-color: var(--accent-color-red);
+    color: var(--bg-low-color);
+    border-color: var(--accent-color-red);
+}
+
+.w-keyboard-key.backspace.pressed {
+    --filter: var(--bg-low-filter);
+}
