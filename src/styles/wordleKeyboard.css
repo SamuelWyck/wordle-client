@@ -18,6 +18,7 @@
     border-radius: 5px;
     font-size: clamp(.8rem, .5rem + .6vw, 1.4rem);
     cursor: pointer;
+    user-select: none;
     color: var(--text-med-color);
     display: flex;
     justify-content: center;
@@ -31,7 +32,7 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 100%;
-    font-size: clamp(.6rem, .3rem + 1vw, 1.1rem);
+    font-size: clamp(.6rem, .3rem + 1vw, 1rem);
 }
 
 .w-keyboard-key.backspace {
