@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(.2rem, .1rem + 1vw, .6rem);
+    gap: clamp(.2rem, .0rem + 1vw, .6rem);
     width: 100%;
 }
 
@@ -22,7 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: clamp(40px, 30px + 1vw, 51px);
+    width: clamp(28px, 20px + 1.5vw, 51px);
     height: clamp(55px, 45px + 1vw, 65px);
     flex-shrink: 0;
 }
