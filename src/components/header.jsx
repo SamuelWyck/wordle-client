@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 function Header() {
     return (
     <header>
+        <Link to={"/"}>
         <div className="logo-wrapper">
             <div className="logo-img">
                 <img src={logo} alt="logo" />
             </div>
             <p className="logo-title">Brain Games</p>
         </div>
+        </Link>
         <nav>
             <Link to={"/"}>Wordle</Link>
         </nav>
