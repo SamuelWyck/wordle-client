@@ -178,7 +178,9 @@ function WordleInput({maxLength, active=false, wordScore={}, submitCb, id, popup
         }
         const wordScore = res.score;
         setLetterDivs(buildLetterDivs(wordScore));
-        colorWordleKeyboardKeys([wordScore]);
+        setTimeout(function() {
+            colorWordleKeyboardKeys([wordScore]);
+        }, 1100)
         let foundWord = true;
         for (let key in wordScore) {
             const letterInfo = wordScore[key];

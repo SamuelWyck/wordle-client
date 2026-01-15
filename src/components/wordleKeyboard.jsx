@@ -8,7 +8,9 @@ import colorWordleKeyboardKeys from "../utils/colorWordleKeyboardKeys.js";
 function WordleKeyboard({wordScores}) {
 
     useEffect(function() {
-        colorWordleKeyboardKeys(wordScores);
+        setTimeout(function() {
+            colorWordleKeyboardKeys(wordScores);
+        }, 1100)
     }, [wordScores]);
 
     return (
