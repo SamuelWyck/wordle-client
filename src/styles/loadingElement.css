@@ -1,0 +1,46 @@
+.loading-main {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    position: relative;
+}
+
+.loading-img-wrapper {
+    width: clamp(100px, 90px + 2vw, 120px);
+}
+
+.loading-img-wrapper img {
+    width: 100%;
+    filter: var(--accent-filter-red) brightness(.8);
+}
+
+.loading-spinner-wrapper {
+    width: clamp(40px, 30px + 1vw, 50px);
+    position: relative;
+}
+
+.loading-spinner-wrapper .circle-img {
+    position: absolute;
+    width: 100%;
+    filter: var(--bg-med-filter);
+}
+
+.loading-spinner-wrapper .spinner-img {
+    width: 100%;
+    filter: var(--accent-filter-red) brightness(.8);
+
+    animation-name: spin;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+}
+
+
+
+@keyframes spin {
+    0% {transform: rotate(0);}
+    50% {transform: rotate(90deg);}
+    50% {transform: rotate(180deg);}
+    100% {transform: rotate(360deg);}
+}
