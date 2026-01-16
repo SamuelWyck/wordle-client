@@ -18,8 +18,8 @@
 
 .show-wordle-rules {
     position: absolute;
-    top: -12%;
-    right: 1%;
+    top: -1%;
+    right: -15%;
     width: 35px;
     display: flex;
     background: none;
@@ -35,4 +35,13 @@
 
 .show-wordle-rules:hover, .show-wordle-rules:focus {
     background-color: var(--bg-med-color);
+}
+
+
+
+@media only screen and (width <= 450px) {
+    .show-wordle-rules {
+        top: -12%;
+        right: 1%;
+    }
 }
