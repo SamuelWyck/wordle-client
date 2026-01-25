@@ -17,6 +17,7 @@
     border: 2px solid var(--text-med-color);
     border-radius: 5px;
     font-size: clamp(.8rem, .5rem + .6vw, 1.4rem);
+    font-weight: bold;
     cursor: pointer;
     user-select: none;
     color: var(--text-med-color);
