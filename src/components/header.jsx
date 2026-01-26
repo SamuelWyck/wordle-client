@@ -6,6 +6,14 @@ import ToggleButton from "./toggleButton.jsx";
 
 
 function Header() {
+
+
+    function toggleLightMode() {
+        const html = document.querySelector("html");
+        html.classList.toggle("light");
+    };
+
+
     return (
     <header>
         <Link to={"/"}>
@@ -16,10 +24,12 @@ function Header() {
             <p className="logo-title">Brain Games</p>
         </div>
         </Link>
-        <nav>
-            <Link to={"/"}>Wordle</Link>
-        </nav>
-        <ToggleButton startOn={false} clickCallback={function(){}} />
+        <div className="options">
+            <nav>
+                <Link to={"/"}>Wordle</Link>
+            </nav>
+            <ToggleButton startOn={true} clickCallback={toggleLightMode} />
+        </div>
     </header>
     );
 };
