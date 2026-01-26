@@ -64,3 +64,57 @@ html {
 
 	--text-med-filter: invert(100%) opacity(.6);
 }
+
+html.light {
+	--text-high-color: hsl(0, 0%, 0%, 0.87);
+	--text-med-color: hsl(0, 0%, 0%, .60);
+	--text-low-color: hsl(0, 0%, 0%, .38);
+	--bg-high-color: hsl(0, 0%, 98%);
+	--bg-med-color: hsl(0, 0%, 95%);
+	--bg-low-color: hsl(0, 0%, 90%);
+	--accent-color-red: hsl(356, 75%, 42%);
+	--accent-color-yellow: hsl(60, 75%, 35%);
+	--accent-color-green: hsl(120, 65%, 20%);
+
+	--accent-filter-red:
+	brightness(0) 
+	saturate(100%) 
+	invert(13%) 
+	sepia(82%) 
+	saturate(4954%) 
+	hue-rotate(350deg) 
+	brightness(84%) 
+	contrast(89%);
+
+	--bg-low-filter:
+	brightness(0) 
+	saturate(100%) 
+	invert(99%) 
+	sepia(1%) 
+	saturate(3723%) 
+	hue-rotate(225deg) 
+	brightness(110%) 
+	contrast(80%);
+
+	--bg-med-filter: 
+	brightness(0) 
+	saturate(100%) 
+	invert(99%) 
+	sepia(13%) 
+	saturate(361%) 
+	hue-rotate(252deg) 
+	brightness(117%) 
+	contrast(90%);
+
+	--bg-high-filter:
+	brightness(0) 
+	saturate(100%) 
+	invert(99%) 
+	sepia(0%) 
+	saturate(7500%) 
+	hue-rotate(195deg) 
+	brightness(118%) 
+	contrast(96%);
+
+	--text-med-filter: brightness(0) opacity(.6);
+}
