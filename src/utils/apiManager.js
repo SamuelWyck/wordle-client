@@ -4,6 +4,7 @@ import storageManager from "./storageManager";
 
 class ApiManager {
     #apiDomain = "https://wordle-api-n3g1.onrender.com";
+    // #apiDomain = "http://localhost:3000";
     #storage = storageManager;
     #wordleSessionHeader = "wordle-session-id";
 
