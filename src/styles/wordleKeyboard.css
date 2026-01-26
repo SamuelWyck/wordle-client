@@ -40,7 +40,7 @@
     flex-basis: 100%;
     flex-grow: 1;
     flex-shrink: 1;
-    --filter: invert(100%) opacity(.6);
+    --filter: var(--text-med-filter);
 }
 
 .w-keyboard-key.backspace img {

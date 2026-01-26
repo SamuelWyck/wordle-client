@@ -30,7 +30,7 @@
 
 .show-wordle-rules img {
     width: 100%;
-    filter: invert() opacity(.6);
+    filter: var(--text-med-filter);
 }
 
 .show-wordle-rules:hover, .show-wordle-rules:focus {
