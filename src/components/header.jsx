@@ -1,6 +1,7 @@
 import "../styles/header.css";
 import logo from "../assets/crosswordLogo.png";
 import { Link } from "react-router-dom";
+import ToggleButton from "./toggleButton.jsx";
 
 
 
@@ -18,6 +19,7 @@ function Header() {
         <nav>
             <Link to={"/"}>Wordle</Link>
         </nav>
+        <ToggleButton startOn={false} clickCallback={function(){}} />
     </header>
     );
 };
