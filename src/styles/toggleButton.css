@@ -1,0 +1,54 @@
+.toggle-btn {
+    border: none;
+    background-color: var(--accent-color-red);
+    cursor: pointer;
+    border-radius: 20px;
+    padding: .2rem;
+    width: clamp(40px, 35px + 1vw, 50px);
+    height: clamp(20px, 10px + 1vw, 25px);
+    position: relative;
+}
+
+.toggle-btn .toggle-btn-toggle {
+    height: 100%;
+    background-color: var(--text-med-color);
+    width: 40%;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+
+    transition: all .1s ease-in-out;
+}
+
+.toggle-btn.on .toggle-btn-toggle {
+    transform: translateX(150%);
+}
+
+.toggle-images {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: .2rem;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    user-select: none;
+}
+
+.toggle-btn.on .light-img, .toggle-btn .dark-img {
+    visibility: hidden;
+}
+
+.toggle-btn .light-img, .toggle-btn.on .dark-img {
+    visibility: visible;
+}
+
+.light-img, .dark-img {
+    transition: all .1s ease-in-out;
+}
+
+.dark-img {
+    filter: var(--bg-med-filter);
+    transform: rotate(30deg);
+}
