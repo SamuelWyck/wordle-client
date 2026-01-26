@@ -44,6 +44,12 @@ header nav a:hover, header nav a:focus {
     text-decoration: underline;
 }
 
+header .options {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
 
 
 @media only screen and (width <= 500px) {
