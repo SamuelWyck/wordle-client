@@ -33,6 +33,10 @@
     width: 100%;
 }
 
+html.light .wordle-popup button img {
+    filter: invert() opacity(.8);
+}
+
 
 @keyframes fade-out {
     0% {opacity: 1;}
