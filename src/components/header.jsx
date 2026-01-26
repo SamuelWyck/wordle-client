@@ -27,7 +27,7 @@ function Header() {
 
     function setInitialColorMode() {
         const colorMode = storageManager.getColorModeSetting();
-        if (colorMode === darkMode) {
+        if (colorMode === darkMode || colorMode === null) {
             return;
         }
         
