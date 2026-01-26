@@ -60,7 +60,7 @@
 }
 
 .wordle-rules-popup button img {
-    filter: invert() opacity(.6);
+    filter: var(--text-med-filter);
 }
 
 .wordle-rules-popup.hidden {
