@@ -52,3 +52,7 @@
     filter: var(--bg-med-filter);
     transform: rotate(30deg);
 }
+
+.light-img {
+    filter: var(--text-med-filter);
+}
