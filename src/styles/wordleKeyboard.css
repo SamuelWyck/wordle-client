@@ -65,7 +65,7 @@
     color: var(--bg-low-color);
     background-color: var(--text-med-color);
     border: none;
-    opacity: .5;
+    opacity: .1;
 }
 
 .w-keyboard-key.right-letter {
