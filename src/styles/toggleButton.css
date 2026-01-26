@@ -17,7 +17,7 @@
     position: relative;
     z-index: 1;
 
-    transition: all .1s ease-in-out;
+    transition: transform .1s ease-in-out;
 }
 
 .toggle-btn.on .toggle-btn-toggle {
@@ -54,5 +54,5 @@
 }
 
 .light-img {
-    filter: var(--text-med-filter);
+    filter: invert(100%) opacity(.6);
 }
