@@ -13,8 +13,8 @@ function Header() {
 
     function toggleLightMode() {
         const html = document.querySelector("html");
-        const wasDarkMode = html.classList.toggle("light");
-        const newMode = (wasDarkMode) ? lightMode : darkMode;
+        const nowLightMode = html.classList.toggle("light");
+        const newMode = (nowLightMode) ? lightMode : darkMode;
         storageManager.saveColorModeSetting(newMode);
     };
 
