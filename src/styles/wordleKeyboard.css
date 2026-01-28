@@ -72,10 +72,12 @@
     color: var(--bg-low-color);
     background-color: var(--accent-color-yellow);
     border: none;
+    opacity: 1;
 }
 
 .w-keyboard-key.correct {
     color: var(--bg-low-color);
     background-color: var(--accent-color-green);
     border: none;
+    opacity: 1;
 }
