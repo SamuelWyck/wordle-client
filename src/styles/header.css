@@ -34,6 +34,11 @@ header > a {
     filter: var(--accent-filter-red);
 }
 
+header nav {
+    display: flex;
+    gap: 1rem;
+}
+
 header nav a {
     color: var(--accent-filter-red);
     text-decoration: none;
