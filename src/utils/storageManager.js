@@ -1,6 +1,7 @@
 class StorageManager {
     #wordleStorageKey = "wordle-session-id";
     #colorModeKey = "braingames-color-mode";
+    #sudokuStorageKey = "sudoku-game";
     #storage = localStorage;
 
     
@@ -20,6 +21,17 @@ class StorageManager {
 
     saveColorModeSetting(mode) {
         this.#storage.setItem(this.#colorModeKey, mode);
+    };
+
+    getSudokuGame() {
+        let gameInfo = this.#storage.getItem(this.#sudokuStorageKey);
+        gameInfo = JSON.parse(gameInfo);
+        return gameInfo;
+    };
+
+    saveSudokuGame(gameInfo) {
+        gameInfo = JSON.stringify(gameInfo);
+        this.#storage.setItem(this.#sudokuStorageKey, gameInfo);
     };
 };
 
