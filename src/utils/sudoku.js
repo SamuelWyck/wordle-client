@@ -28,7 +28,18 @@ class Sudoku {
     };
 
 
+    clearBoard() {
+        for (let row = 0; row < this.#boardHeight; row += 1) {
+            for (let col = 0; col < this.#boardWidth; col += 1) {
+                this.#board[row][col] = this.#emptySymbol;
+            }
+        }
+    };
+
+
     generate() {
+        this.clearBoard();
+
         this.#fillBoard();
         this.#completedBoard = [];
         for (let row of this.#board) {
@@ -60,7 +71,7 @@ class Sudoku {
             const posNum = this.#board[row][col];
             this.#board[row][col] = this.#emptySymbol;
 
-            const solvable = this.#solveBoardRec(this.#board);
+            const solvable = this.#solveBoard(this.#board);
             if (!solvable) {
                 numsToRemove += 1;
                 this.#board[row][col] = posNum;
@@ -81,49 +92,8 @@ class Sudoku {
     };
 
 
-    #solveBoardRec(board) {
-        const emptyPositions = [];
-        for (let row = 0; row < board.length; row += 1) {
-            for (let col = 0; col < board[0].length; col += 1) {
-                const pos = board[row][col];
-                if (pos === this.#emptySymbol) {
-                    emptyPositions.push([row, col]);
-                }
-            }
-        }
-
-        if (emptyPositions.length === 0) {
-            return true;
-        }
-
-        const possibleNumsMap = this.#enumeratePossibilites(emptyPositions);
-        let placedNum = false;
-        for (let pos in possibleNumsMap) {
-            const cadidateNums = possibleNumsMap[pos];
-            if (cadidateNums.length === 1) {
-                const [row, col] = JSON.parse(pos);
-                const num = cadidateNums[0];
-                board[row][col] = num;
-                placedNum = true;
-            }
-        }
-
-        let solved = false;
-        if (placedNum) {
-            solved = this.#solveBoardRec(board);
-        } 
-        
-        for (let pos of emptyPositions) {
-            const [row, col] = pos;
-            board[row][col] = this.#emptySymbol;
-        }
-
-        return solved;
-    };
-
-
-    // #solveBoard(board) {
-    //     let emptyPositions = [];
+    // #solveBoardRec(board) {
+    //     const emptyPositions = [];
     //     for (let row = 0; row < board.length; row += 1) {
     //         for (let col = 0; col < board[0].length; col += 1) {
     //             const pos = board[row][col];
@@ -133,47 +103,88 @@ class Sudoku {
     //         }
     //     }
 
-    //     const originalEmptyPos = emptyPositions.slice();
-
-    //     let solved = true;
-    //     while (emptyPositions.length > 0) {
-    //         const possibleNumsMap = this.#enumeratePossibilites(emptyPositions);
-            
-    //         const filledPositions = new Set();
-    //         let placedNum = false;
-    //         for (let pos in possibleNumsMap) {
-    //             const cadidateNums = possibleNumsMap[pos];
-    //             if (cadidateNums.length === 1) {
-    //                 const [row, col] = JSON.parse(pos);
-    //                 const num = cadidateNums[0];
-    //                 board[row][col] = num;
-
-    //                 placedNum = true;
-    //                 filledPositions.add(pos);
-    //             }
-    //         }
-
-    //         if (!placedNum) {
-    //             solved = false;
-    //             break;
-    //         }
-
-    //         let newEmptyPositions = [];
-    //         for (let pos of emptyPositions) {
-    //             const key = JSON.stringify(pos);
-    //             if (!filledPositions.has(key)) {
-    //                 newEmptyPositions.push(pos);
-    //             }
-    //         }
-    //         emptyPositions = newEmptyPositions;
+    //     if (emptyPositions.length === 0) {
+    //         return true;
     //     }
 
-    //     for (let pos of originalEmptyPos) {
+    //     const possibleNumsMap = this.#enumeratePossibilites(emptyPositions);
+    //     let placedNum = false;
+    //     for (let pos in possibleNumsMap) {
+    //         const cadidateNums = possibleNumsMap[pos];
+    //         if (cadidateNums.length === 1) {
+    //             const [row, col] = JSON.parse(pos);
+    //             const num = cadidateNums[0];
+    //             board[row][col] = num;
+    //             placedNum = true;
+    //         }
+    //     }
+
+    //     let solved = false;
+    //     if (placedNum) {
+    //         solved = this.#solveBoardRec(board);
+    //     } 
+        
+    //     for (let pos of emptyPositions) {
     //         const [row, col] = pos;
     //         board[row][col] = this.#emptySymbol;
     //     }
+
     //     return solved;
     // };
+
+
+    #solveBoard(board) {
+        let emptyPositions = [];
+        for (let row = 0; row < board.length; row += 1) {
+            for (let col = 0; col < board[0].length; col += 1) {
+                const pos = board[row][col];
+                if (pos === this.#emptySymbol) {
+                    emptyPositions.push([row, col]);
+                }
+            }
+        }
+
+        const originalEmptyPos = emptyPositions.slice();
+
+        let solved = true;
+        while (emptyPositions.length > 0) {
+            const possibleNumsMap = this.#enumeratePossibilites(emptyPositions);
+            
+            const filledPositions = new Set();
+            let placedNum = false;
+            for (let pos in possibleNumsMap) {
+                const cadidateNums = possibleNumsMap[pos];
+                if (cadidateNums.length === 1) {
+                    const [row, col] = JSON.parse(pos);
+                    const num = cadidateNums[0];
+                    board[row][col] = num;
+
+                    placedNum = true;
+                    filledPositions.add(pos);
+                }
+            }
+
+            if (!placedNum) {
+                solved = false;
+                break;
+            }
+
+            let newEmptyPositions = [];
+            for (let pos of emptyPositions) {
+                const key = JSON.stringify(pos);
+                if (!filledPositions.has(key)) {
+                    newEmptyPositions.push(pos);
+                }
+            }
+            emptyPositions = newEmptyPositions;
+        }
+
+        for (let pos of originalEmptyPos) {
+            const [row, col] = pos;
+            board[row][col] = this.#emptySymbol;
+        }
+        return solved;
+    };
 
 
     #enumeratePossibilites(emptyPositions) {
@@ -352,6 +363,16 @@ class Sudoku {
         this.#findNumbersRec(board, row, col, horizontalPosDeltas, new Set(), foundNums);
         this.#findSubGridNumbers(board, row, col, foundNums);
         return foundNums.has(targetNum);
+    };
+
+
+    getBoard() {
+        return this.#board;
+    };
+
+
+    get emptySymbol() {
+        return this.#emptySymbol;
     };
 };
 
