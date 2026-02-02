@@ -6,7 +6,9 @@ class Sudoku {
     #emptySymbol = "X";
     #boardWidth = 9;
     #boardHeight = 9;
-    #board = [];
+    #board = null;
+    #startingBoard = null;
+    #completedBoard = null;
 
 
     constructor() {
@@ -26,7 +28,29 @@ class Sudoku {
     };
 
 
-    removeNumbers() {
+    generate() {
+        this.#fillBoard();
+        this.#completedBoard = [];
+        for (let row of this.#board) {
+            const rowCopy = row.slice();
+            this.#completedBoard.push(rowCopy);
+        }
+
+        this.#removeNumbers();
+        this.#startingBoard = [];
+        for (let row of this.#board) {
+            const rowCopy = row.slice();
+            this.#startingBoard.push(rowCopy);
+        }
+    };
+
+
+    setCell(row, col, number) {
+        this.#board[row][col] = number;
+    };
+
+
+    #removeNumbers() {
         const lowerBound = 45;
         const higherBound = 51;
         let numsToRemove = randInt(lowerBound, higherBound);
@@ -43,7 +67,6 @@ class Sudoku {
             }
             numsToRemove -= 1;
         }
-        console.table(this.#board)
     };
 
 
@@ -244,12 +267,11 @@ class Sudoku {
     };
 
 
-    fillBoard() {
+    #fillBoard() {
         const startRow = 0;
         const startCol = 0;
         const visited = new Set();
         this.#fillBoardRec(this.#board, startRow, startCol, visited);
-        console.table(this.#board);
     };
 
 
@@ -334,6 +356,5 @@ class Sudoku {
 };
 
 
-const sudoku = new Sudoku();
-sudoku.fillBoard()
-sudoku.removeNumbers()
+
+export default new Sudoku();
