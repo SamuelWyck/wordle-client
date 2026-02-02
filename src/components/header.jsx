@@ -52,6 +52,7 @@ function Header() {
         <div className="options">
             <nav>
                 <Link to={"/"}>Wordle</Link>
+                <Link to={"/sudoku"}>Sudoku</Link>
             </nav>
             <ToggleButton startOn={isDarkMode()} clickCallback={toggleLightMode} />
         </div>
