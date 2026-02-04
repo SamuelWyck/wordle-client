@@ -61,6 +61,21 @@ class Sudoku {
     };
 
 
+    resetBoard() {
+        if (!this.#completedBoard) {
+            return false;
+        }
+
+        for (let row = 0; row < this.#board.length; row += 1) {
+            for (let col = 0; col < this.#board[0].length; col += 1) {
+                const startCell = this.#startingBoard[row][col];
+                this.#board[row][col] = startCell;
+            }
+        }
+        return true;
+    };
+
+
     #removeNumbers() {
         const lowerBound = 45;
         const higherBound = 51;
