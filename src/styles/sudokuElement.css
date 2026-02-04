@@ -28,6 +28,7 @@ main.sudoku {
     height: clamp(35px, 30px + 1vw, 50px);
     color: var(--text-med-color);
     font-size: clamp(1rem, .8rem + 1vw, 1.6rem);
+    font-style: italic;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -47,6 +48,11 @@ main.sudoku {
 
 .sudoku-cell.active-cell {
     background-color: var(--accent-color-red);
+}
+
+.sudoku-cell.filled-cell {
+    font-style: normal;
+    color: var(--text-high-color);
 }
 
 .sudoku-btns {
