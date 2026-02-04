@@ -5,16 +5,20 @@ import { useRef } from "react";
 
 
 function SudokuElement() {
-    const boardRef = useRef(buildBoard());
+    const boardRef = useRef(null);
+    const cellsRef = useRef(buildBoard());
     const currentCellRef = useRef(null);
     const activeCellCls = "active-cell";
+    const filledCellCls = "filled-cell";
       
 
     function buildBoard() {
         const boardWidth = 9;
         const boardHeight = 9;
         const boardCells = [];
+        boardRef.current = [];
         for (let row = 0; row < boardHeight; row += 1) {
+            const boardRow = [];
             for (let col = 0; col < boardWidth; col += 1) {
                 const cell = <div 
                     className="sudoku-cell" 
@@ -22,7 +26,9 @@ function SudokuElement() {
                     key={`${row}${col}`}
                 ></div>;
                 boardCells.push(cell);
-            } 
+                boardRow.push(cell);
+            }
+            boardRef.current.push(boardRow);
         }
         return boardCells;
     };
@@ -32,8 +38,13 @@ function SudokuElement() {
         if (currentCellRef.current !== null) {
             currentCellRef.current.classList.remove(activeCellCls);
         }
-        event.target.classList.add(activeCellCls);
-        currentCellRef.current = event.target;
+        const cell = event.target;
+        if (cell.matches(`.${filledCellCls}`)) {
+            return;
+        }
+
+        cell.classList.add(activeCellCls);
+        currentCellRef.current = cell;
     };
 
 
@@ -48,15 +59,75 @@ function SudokuElement() {
 
         const num = target.dataset.num;
         currentCellRef.current.textContent = num;
+
+        const row = Number(currentCellRef.current.dataset.row);
+        const col = Number(currentCellRef.current.dataset.col);
+        sudoku.setCell(row, col, num);
     };
 
+
+    function gameOptionsClick(event) {
+        if (!event.target.matches("button")) {
+            return;
+        }
+        
+        if (event.target.matches(".sudoku-new-game-btn")) {
+            generateNewGame();
+        } else {
+            resetGame();
+        }
+    };
+
+
+    function resetGame() {
+        const gameReset = sudoku.resetBoard();
+        if (!gameReset) {
+            return;
+        }
+        setBoard();
+    };
+
+
+    function generateNewGame() {
+        sudoku.generate();
+        setBoard();
+    };
+
+
+    function setBoard() {
+        const board = sudoku.getBoard();
+        for (let row = 0; row < board.length; row += 1) {
+            for (let col = 0; col < board[0].length; col += 1) {
+                const cell = document.querySelector(`.sudoku-cell[data-row="${row}"][data-col="${col}"]`);
+                let num = board[row][col];
+                if (num !== sudoku.emptySymbol) {
+                    cell.textContent = num;
+                    cell.classList.add(filledCellCls);
+                } else {
+                    cell.textContent = "";
+                    cell.classList.remove(filledCellCls);
+                }
+            }
+        }
+
+        if (currentCellRef.current !== null) {
+            currentCellRef.current.classList.remove(activeCellCls);
+            currentCellRef.current = null;
+        }
+    };
 
     
     return (
     <main className="sudoku">
         <div className="sudoku-game">
-            <div className="sudoku-board" onClick={handleCellClick}>
-                {boardRef.current}
+            <div className="sudoku-board-wrapper">
+                <div className="sudoku-game-options" onClick={gameOptionsClick}>
+                    <button className="sudoku-new-game-btn">New game</button>
+                    <button className="sudoku-reset-btn">Reset Game</button>
+                </div>
+                <div className="sudoku-board" onClick={handleCellClick}>
+                    {cellsRef.current}
+                </div>
             </div>
             <div className="sudoku-btns">
                 <div className="edit-btns">
