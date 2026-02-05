@@ -57,7 +57,24 @@ class Sudoku {
 
 
     setCell(row, col, number) {
+        if (this.#startingBoard === null) {
+            return;
+        }
+        if (this.#startingBoard[row][col] !== this.#emptySymbol) {
+            return;
+        }
         this.#board[row][col] = number;
+    };
+
+
+    resetCell(row, col) {
+        if (this.#startingBoard === null) {
+            return;
+        }
+        if (this.#startingBoard[row][col] !== this.#emptySymbol) {
+            return;
+        }
+        this.#board[row][col] = this.#emptySymbol;
     };
 
 
@@ -76,8 +93,22 @@ class Sudoku {
     };
 
 
+    boardSolved() {
+        for (let row = 0; row < this.#board.length; row += 1) {
+            for (let col = 0; col < this.#board[0].length; col += 1) {
+                const boardNum = this.#board[row][col];
+                const targetNum = this.#completedBoard[row][col];
+                if (boardNum !== targetNum) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+
     #removeNumbers() {
-        const lowerBound = 45;
+        const lowerBound = 48;
         const higherBound = 51;
         let numsToRemove = randInt(lowerBound, higherBound);
         while (numsToRemove > 0) {
