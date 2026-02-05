@@ -11,11 +11,13 @@ function SudokuElement() {
     const numsRemaining = useRef(buildNumsMap())
     const currentCellRef = useRef(null);
     const gameStarted = useRef(false);
+    const noteMode = useRef(false);
 
     const activeCellCls = "active-cell";
     const filledCellCls = "filled-cell";
     const allNumsPlacedCls = "all-nums-placed";
     const highlightedCellCls = "highlighted-cell";
+    const cellNoteCls = "cell-note";
       
 
     function buildBoard() {
@@ -82,6 +84,10 @@ function SudokuElement() {
         if (numsRemaining.current[num] === 0) {
             return;
         }
+        if (noteMode.current) {
+            toggleCellNote(num);
+            return;
+        }
 
         const oldNum = currentCellRef.current.textContent;
         if (num !== oldNum) {
@@ -132,19 +138,23 @@ function SudokuElement() {
         const target = event.target;
 
         if (target.matches(".sudoku-erase-btn")) {
-            if (currentCellRef.current !== null) {
-                const oldNum = currentCellRef.current.textContent;
-                if (oldNum !== "") {
-                    numsRemaining.current[oldNum] += 1;
-                    const addCls = true;
-                    toggleCompletedNumBtn(oldNum, !addCls);
-                }
-                currentCellRef.current.textContent = "";
-                const row = Number(currentCellRef.current.dataset.row);
-                const col = Number(currentCellRef.current.dataset.col);
-                sudoku.resetCell(row, col);
-                clearHighlightedCells();
+            const cell = currentCellRef.current;
+            if (cell === null || cell.matches(`.${filledCellCls}`)) {
+                return;
             }
+            const oldNum = cell.textContent;
+            if (oldNum !== "" && cell.children.length === 0) {
+                numsRemaining.current[oldNum] += 1;
+                const addCls = true;
+                toggleCompletedNumBtn(oldNum, !addCls);
+            }
+            cell.textContent = "";
+            const row = Number(cell.dataset.row);
+            const col = Number(cell.dataset.col);
+            sudoku.resetCell(row, col);
+            clearHighlightedCells();
+        } else if (target.matches(".sudoku-note-btn")) {
+            noteMode.current = !noteMode.current;
         }
     };
 
@@ -165,6 +175,40 @@ function SudokuElement() {
             } else {
                 cell.classList.remove(highlightedCellCls);
             }
+        }
+    };
+
+
+    function toggleCellNote(num) {
+        const cell = currentCellRef.current;
+        if (cell.textContent !== "" && cell.children.length === 0) {
+            const row = Number(cell.dataset.row);
+            const col = Number(cell.dataset.col);
+            sudoku.resetCell(row, col);
+            cell.textContent = "";
+        }
+
+        for (let child of cell.children) {
+            if (child.textContent === num) {
+                child.remove();
+                return;
+            }
+        }
+
+        const cellNote = document.createElement("div");
+        cellNote.classList.add(cellNoteCls);
+        cellNote.textContent = num;
+        cell.appendChild(cellNote);
+
+        const children = [...cell.children];
+        children.sort((firstNote, secondNote) => {
+            const firstNum = Number(firstNote.textContent);
+            const secondNum = Number(secondNote.textContent);
+            return firstNum - secondNum;
+        });
+        cell.textContent = "";
+        for (let child of children) {
+            cell.appendChild(child);
         }
     };
 
