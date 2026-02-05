@@ -241,6 +241,7 @@ function SudokuElement() {
         setBoard();
         setNumBtns();
         clearHighlightedCells();
+        noteMode.current = false;
     };
 
 
@@ -249,6 +250,7 @@ function SudokuElement() {
         setBoard();
         setNumBtns();
         clearHighlightedCells();
+        noteMode.current = false;
     };
 
 
