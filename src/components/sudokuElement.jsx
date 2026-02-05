@@ -15,6 +15,7 @@ function SudokuElement() {
     const activeCellCls = "active-cell";
     const filledCellCls = "filled-cell";
     const allNumsPlacedCls = "all-nums-placed";
+    const highlightedCellCls = "highlighted-cell";
       
 
     function buildBoard() {
@@ -49,17 +50,17 @@ function SudokuElement() {
         if (!gameStarted.current) {
             return;
         }
+        if (event.target === currentCellRef.current) {
+            return;
+        }
         if (currentCellRef.current !== null) {
             currentCellRef.current.classList.remove(activeCellCls);
         }
         const cell = event.target;
-        if (cell.matches(`.${filledCellCls}`)) {
-            currentCellRef.current = null;
-            return;
-        }
-
         cell.classList.add(activeCellCls);
+        cell.classList.remove(highlightedCellCls);
         currentCellRef.current = cell;
+        highlightMatchingCells(cell.textContent);
     };
 
 
@@ -68,6 +69,9 @@ function SudokuElement() {
             return;
         }
         if (currentCellRef.current === null) {
+            return;
+        }
+        if (currentCellRef.current.matches(`.${filledCellCls}`)) {
             return;
         }
         const target = event.target;
@@ -80,7 +84,7 @@ function SudokuElement() {
         }
 
         const oldNum = currentCellRef.current.textContent;
-        if (oldNum !== num) {
+        if (num !== oldNum) {
             numsRemaining.current[num] -= 1;
             if (numsRemaining.current[num] === 0) {
                 const addCls = true;
@@ -89,6 +93,7 @@ function SudokuElement() {
         }
         
         currentCellRef.current.textContent = num;
+        highlightMatchingCells(num);
         const row = Number(currentCellRef.current.dataset.row);
         const col = Number(currentCellRef.current.dataset.col);
         sudoku.setCell(row, col, num);
@@ -100,6 +105,7 @@ function SudokuElement() {
                 gameStarted.current = false;
                 popupRef.current.showMessage("Board Solved!", !fadeOut);
                 currentCellRef.current.classList.remove(activeCellCls);
+                clearHighlightedCells();
                 currentCellRef.current = null;
             } else {
                 popupRef.current.showMessage("Incorrect", !fadeOut);
@@ -136,7 +142,28 @@ function SudokuElement() {
                 currentCellRef.current.textContent = "";
                 const row = Number(currentCellRef.current.dataset.row);
                 const col = Number(currentCellRef.current.dataset.col);
-                sudoku.resetBoard(row, col);
+                sudoku.resetCell(row, col);
+                clearHighlightedCells();
+            }
+        }
+    };
+
+
+    function clearHighlightedCells() {
+        highlightMatchingCells("");
+    };
+
+
+    function highlightMatchingCells(num) {
+        const cells = document.querySelectorAll(".sudoku-cell");
+        for (let cell of cells) {
+            if (cell === currentCellRef.current) {
+                continue;
+            }
+            if (cell.textContent === num && num !== "") {
+                cell.classList.add(highlightedCellCls);
+            } else {
+                cell.classList.remove(highlightedCellCls);
             }
         }
     };
@@ -169,6 +196,7 @@ function SudokuElement() {
         }
         setBoard();
         setNumBtns();
+        clearHighlightedCells();
     };
 
 
@@ -176,6 +204,7 @@ function SudokuElement() {
         sudoku.generate();
         setBoard();
         setNumBtns();
+        clearHighlightedCells();
     };
 
 
