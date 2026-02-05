@@ -32,9 +32,19 @@ main.sudoku {
     font-style: italic;
     /* font-weight: bold; */
     display: flex;
+    flex-wrap: wrap;
+    gap: .1rem;
     justify-content: center;
     align-items: center;
     cursor: default;
+    position: relative;
+}
+
+.sudoku-cell .cell-note {
+    font-size: clamp(.5rem, .1rem + .7vw, .8rem);
+    font-weight: bold;
+    font-style: normal;
+    pointer-events: none;
 }
 
 .sudoku-cell[data-row="2"], .sudoku-cell[data-row="5"] {
