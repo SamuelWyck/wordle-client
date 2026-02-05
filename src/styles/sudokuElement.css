@@ -2,6 +2,7 @@ main.sudoku {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .sudoku-game {
@@ -24,12 +25,12 @@ main.sudoku {
 .sudoku-board .sudoku-cell {
     background-color: var(--bg-low-color);
     border: 1px solid var(--text-low-color);
-    width: clamp(35px, 30px + 1vw, 50px);
-    height: clamp(35px, 30px + 1vw, 50px);
+    width: clamp(35px, 30px + 1vw, 60px);
+    height: clamp(35px, 30px + 1vw, 60px);
     color: var(--text-med-color);
     font-size: clamp(1rem, .8rem + 1vw, 1.6rem);
     font-style: italic;
-    font-weight: bold;
+    /* font-weight: bold; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,6 +53,7 @@ main.sudoku {
 
 .sudoku-cell.filled-cell {
     font-style: normal;
+    font-weight: bold;
     color: var(--text-high-color);
 }
 
@@ -73,6 +75,62 @@ main.sudoku {
     border: 2px solid var(--text-med-color);
     border-radius: 10px;
     outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sudoku-num-btn[data-num="1"]::before {
+    content: "1";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="2"]::before {
+    content: "2";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="3"]::before {
+    content: "3";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="4"]::before {
+    content: "4";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="5"]::before {
+    content: "5";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="6"]::before {
+    content: "6";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="7"]::before {
+    content: "7";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="8"]::before {
+    content: "8";
+    display: block;
+}
+
+.sudoku-num-btn[data-num="9"]::before {
+    content: "9";
+    display: block;
+}
+
+.sudoku-num-btn.all-nums-placed::before {
+    content: url("../assets/check.svg");
+    display: inline-block;
+    width: 70%;
+    height: 70%;
+    filter: var(--text-med-filter);
 }
 
 .sudoku-num-btn:hover, .sudoku-num-btn:focus {
@@ -101,12 +159,17 @@ main.sudoku {
     .sudoku-btns .num-btns {
         display: flex;
     }
-
+    
     .num-btns .sudoku-num-btn {
         border: none;
         width: initial;
         height: initial;
         padding: .3rem;
+    }
+
+    .sudoku-num-btn.all-nums-placed::before {
+        width: 18px;
+        height: 100%;
     }
 
     .sudoku-btns {
