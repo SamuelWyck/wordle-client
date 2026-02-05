@@ -42,13 +42,47 @@ main.sudoku {
     border-bottom-color: var(--text-med-color);
 }
 
+.sudoku-cell[data-row="3"], .sudoku-cell[data-row="6"] {
+    border-top-width: 2px;
+    border-top-color: var(--text-med-color);
+}
+
 .sudoku-cell[data-col="2"], .sudoku-cell[data-col="5"] {
     border-right-width: 2px;
     border-right-color: var(--text-med-color);
 }
 
+.sudoku-cell[data-col="3"], .sudoku-cell[data-col="6"] {
+    border-left-width: 2px;
+    border-left-color: var(--text-med-color);
+}
+
+.sudoku-cell[data-row="0"] {
+    border-top-width: 2px;
+    border-top-color: var(--text-med-color);
+}
+
+.sudoku-cell[data-col="0"] {
+    border-left-width: 2px;
+    border-left-color: var(--text-med-color);
+}
+
+.sudoku-cell[data-col="8"] {
+    border-right-width: 2px;
+    border-right-color: var(--text-med-color);
+}
+
+.sudoku-cell[data-row="8"] {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--text-med-color);
+}
+
 .sudoku-cell.active-cell {
     background-color: var(--accent-color-red);
+}
+
+.sudoku-cell.highlighted-cell {
+   background-color: var(--accent-color-green);
 }
 
 .sudoku-cell.filled-cell {
