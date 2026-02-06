@@ -2,6 +2,8 @@ import "../styles/sudokuElement.css";
 import sudoku from "../utils/sudoku.js";
 import { useRef } from "react";
 import WordleMsgPopup from "./wordlePopup.jsx";
+import undoImg from "../assets/undo.svg";
+import eraserImg from "../assets/eraser.svg";
 
 
 
@@ -19,6 +21,7 @@ function SudokuElement() {
     const allNumsPlacedCls = "all-nums-placed";
     const highlightedCellCls = "highlighted-cell";
     const cellNoteCls = "cell-note";
+    const noteModeCls = "note-mode";
       
 
     function buildBoard() {
@@ -166,6 +169,7 @@ function SudokuElement() {
             appendCellHistory(cell, oldHTML, "");
         } else if (target.matches(".sudoku-note-btn")) {
             noteMode.current = !noteMode.current;
+            target.classList.toggle(noteModeCls);
         } else if (target.matches(".sudoku-undo-btn")) {
             popHistory();
         }
@@ -383,10 +387,10 @@ function SudokuElement() {
                 </div>
             </div>
             <div className="sudoku-btns">
-                <div className="edit-btns on" onClick={handleEditBtnClick}>
-                    <button className="sudoku-undo-btn">undo</button>
-                    <button className="sudoku-erase-btn">erase</button>
-                    <button className="sudoku-note-btn">note</button>
+                <div className="edit-btns" onClick={handleEditBtnClick}>
+                    <button className="sudoku-undo-btn"><img src={undoImg} alt="undo" /></button>
+                    <button className="sudoku-erase-btn"><img src={eraserImg} alt="eraser" /></button>
+                    <button className="sudoku-note-btn"></button>
                 </div>
                 <div className="num-btns" onClick={handleNumBtnClick}>
                     <button className="sudoku-num-btn" data-num="1"></button>
