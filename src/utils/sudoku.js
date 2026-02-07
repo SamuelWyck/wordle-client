@@ -12,19 +12,22 @@ class Sudoku {
 
 
     constructor() {
-        this.#buildBoard();
+        this.#board = this.#buildBoard();
+        this.#startingBoard = this.#buildBoard();
+        this.#completedBoard = this.#buildBoard();
     };
 
 
     #buildBoard() {
-        this.#board = [];
+        const board = [];
         for (let row = 0; row < this.#boardHeight; row += 1) {
             const boardRow = [];
             for (let col = 0; col < this.#boardWidth; col += 1) {
                 boardRow.push(this.#emptySymbol);
             }
-            this.#board.push(boardRow);
+            board.push(boardRow);
         }
+        return board;
     };
 
 
@@ -41,18 +44,10 @@ class Sudoku {
         this.clearBoard();
 
         this.#fillBoard();
-        this.#completedBoard = [];
-        for (let row of this.#board) {
-            const rowCopy = row.slice();
-            this.#completedBoard.push(rowCopy);
-        }
+        this.SetCompletedBoard(this.#board);
 
         this.#removeNumbers();
-        this.#startingBoard = [];
-        for (let row of this.#board) {
-            const rowCopy = row.slice();
-            this.#startingBoard.push(rowCopy);
-        }
+        this.setStartingBoard(this.#board);
     };
 
 
@@ -417,8 +412,48 @@ class Sudoku {
     };
 
 
+    setBoard(board) {
+        for (let row = 0; row < this.#board.length; row += 1) {
+            for (let col = 0; col < this.#board[0].length; col += 1) {
+                const cell = board[row][col];
+                this.#board[row][col] = cell;
+            }
+        }
+    };
+
+
     get emptySymbol() {
         return this.#emptySymbol;
+    };
+
+
+    getCompletedBoard() {
+        return this.#completedBoard;
+    };
+
+
+    SetCompletedBoard(board) {
+        for (let row = 0; row < this.#board.length; row += 1) {
+            for (let col = 0; col < this.#board[0].length; col += 1) {
+                const cell = board[row][col];
+                this.#completedBoard[row][col] = cell;
+            }
+        }
+    };
+
+
+    getStartingBoard() {
+        return this.#startingBoard;
+    };
+
+
+    setStartingBoard(board) {
+        for (let row = 0; row < this.#board.length; row += 1) {
+            for (let col = 0; col < this.#board[0].length; col += 1) {
+                const cell = board[row][col];
+                this.#startingBoard[row][col] = cell;
+            }
+        }
     };
 };
 
