@@ -1,6 +1,7 @@
 import "../styles/sudokuElement.css";
 import sudoku from "../utils/sudoku.js";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import storage from "../utils/storageManager.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
 import undoImg from "../assets/undo.svg";
 import eraserImg from "../assets/eraser.svg";
@@ -22,6 +23,25 @@ function SudokuElement() {
     const highlightedCellCls = "highlighted-cell";
     const cellNoteCls = "cell-note";
     const noteModeCls = "note-mode";
+
+
+    useEffect(function() {
+        const savedBoard = storage.getSudokuGame();
+        if (savedBoard === null) {
+            return;
+        }
+
+        const completedBoard = storage.getSudokuCompletedBoard();
+        const startBoard = storage.getSudokuStartBoard();
+
+        sudoku.setBoard(savedBoard);
+        sudoku.setStartingBoard(startBoard);
+        sudoku.SetCompletedBoard(completedBoard);
+
+        setBoard();
+        setNumBtns();
+        gameStarted.current = true;
+    }, []);
       
 
     function buildBoard() {
@@ -331,6 +351,18 @@ function SudokuElement() {
         clearHighlightedCells();
         noteMode.current = false;
         history.current = [];
+        saveSudokuGame();
+    };
+
+
+    function saveSudokuGame() {
+        const currentBoard = sudoku.getBoard();
+        const completedBoard = sudoku.getCompletedBoard();
+        const startBoard = sudoku.getStartingBoard();
+
+        storage.saveSudokuGame(currentBoard);
+        storage.saveSudokuCompletedBoard(completedBoard);
+        storage.saveSudokuStartBoard(startBoard);
     };
 
 
