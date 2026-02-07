@@ -367,6 +367,9 @@ function SudokuElement() {
         noteMode.current = false;
         history.current = [];
         saveSudokuGame();
+        
+        const fadeOut = true;
+        popupRef.current.showMessage("Board generated!", fadeOut);
     };
 
 
