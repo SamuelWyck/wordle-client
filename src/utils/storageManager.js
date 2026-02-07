@@ -1,7 +1,9 @@
 class StorageManager {
     #wordleStorageKey = "wordle-session-id";
     #colorModeKey = "braingames-color-mode";
-    #sudokuStorageKey = "sudoku-game";
+    #sudokuGameKey = "sudoku-game";
+    #sudokuStartBoardKey = "sudoku-starting";
+    #sudouCompleteBoardKey = "sudoku-complete";
     #storage = localStorage;
 
     
@@ -24,14 +26,42 @@ class StorageManager {
     };
 
     getSudokuGame() {
-        let gameInfo = this.#storage.getItem(this.#sudokuStorageKey);
-        gameInfo = JSON.parse(gameInfo);
-        return gameInfo;
+        let game = this.#storage.getItem(this.#sudokuGameKey);
+        if (game !== null) {
+            game = JSON.parse(game);
+        }
+        return game;
     };
 
-    saveSudokuGame(gameInfo) {
-        gameInfo = JSON.stringify(gameInfo);
-        this.#storage.setItem(this.#sudokuStorageKey, gameInfo);
+    saveSudokuGame(game) {
+        game = JSON.stringify(game);
+        this.#storage.setItem(this.#sudokuGameKey, game);
+    };
+
+    getSudokuStartBoard() {
+        let startBoard = this.#storage.getItem(this.#sudokuStartBoardKey);
+        if (startBoard !== null) {
+            startBoard = JSON.parse(startBoard);
+        }
+        return startBoard;
+    };
+
+    saveSudokuStartBoard(startBoard) {
+        startBoard = JSON.stringify(startBoard);
+        this.#storage.setItem(this.#sudokuStartBoardKey, startBoard);
+    };
+
+    getSudokuCompletedBoard() {
+        let completedBoard = this.#storage.getItem(this.#sudouCompleteBoardKey);
+        if (completedBoard !== null) {
+            completedBoard = JSON.parse(completedBoard);
+        }
+        return completedBoard;
+    };
+
+    saveSudokuCompletedBoard(completedBoard) {
+        completedBoard = JSON.stringify(completedBoard);
+        this.#storage.setItem(this.#sudouCompleteBoardKey, completedBoard);
     };
 };
 
