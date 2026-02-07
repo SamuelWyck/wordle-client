@@ -232,6 +232,33 @@ main.sudoku {
     content: url("../assets//pencil-off.svg");
 }
 
+.sudoku-board-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sudoku-game-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.sudoku-game-options > button {
+    cursor: pointer;
+    background-color: var(--bg-low-color);
+    border: 2px solid var(--text-med-color);
+    border-radius: 10px;
+    color: var(--text-med-color);
+    font-family: "roboto";
+    font-size: 1rem;
+    font-weight: bold;
+    padding: .5rem 1rem;
+}
+
+.sudoku-game-options > button:active, .sudoku-game-options > button:hover {
+    background-color: var(--accent-color-red);
+}
+
 
 
 @media only screen and (width <= 800px) {

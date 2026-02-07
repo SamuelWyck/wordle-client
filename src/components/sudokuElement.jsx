@@ -288,7 +288,6 @@ function SudokuElement() {
         const newHTML = cell.innerHTML;
         appendCellHistory(cell, oldHTML, newHTML);
         clearHighlightedCells();
-        console.log(numsRemaining.current)
     };
 
 
