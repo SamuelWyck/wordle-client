@@ -118,7 +118,6 @@ main.sudoku {
     font-size: clamp(32px, 25px + 1vw, 35px);
     border: 2px solid var(--text-med-color);
     border-radius: 10px;
-    outline: none;
     display: flex;
     justify-content: center;
     align-items: center;
