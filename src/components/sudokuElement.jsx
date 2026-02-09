@@ -440,9 +440,32 @@ function SudokuElement() {
         }
     };
 
+
+    function removeActiveCell(event) {
+        const target = event.target;
+        if (currentCellRef.current === null) {
+            return;
+        }
+        if (target.matches(".sudoku-cell")) {
+            return;
+        }
+        if (target.matches(".sudoku-num-btn")) {
+            return;
+        }
+        if (target.matches("sudoku-new-game-btn") || target.matches("sudoku-reset-btn")) {
+            return;
+        }
+        if (target.matches(".sudoku-note-btn") || target.matches(".sudoku-erase-btn") || target.matches(".sudoku-undo-btn")) {
+            return;
+        }
+        
+        currentCellRef.current.classList.remove(activeCellCls);
+        currentCellRef.current = null;
+    };
+
     
     return (
-    <main className="sudoku">
+    <main className="sudoku" onClick={removeActiveCell}>
         <WordleMsgPopup ref={popupRef} />
         <div className="sudoku-game">
             <div className="sudoku-board-wrapper">
