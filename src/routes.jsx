@@ -22,7 +22,7 @@ const routes = [
             },
             {
                 path: "/2048",
-                element: <TwentyFourtyEightElement />
+                element: <TwentyFourtyEightElement boardWidth={4} boardHeight={4} />
             },
             {
                 path: "*",
