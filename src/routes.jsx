@@ -2,6 +2,7 @@ import "./App.jsx";
 import App from "./App.jsx";
 import Wordle from "./components/wordle.jsx";
 import SudokuElement from "./components/sudokuElement.jsx";
+import TwentyFourtyEightElement from "./components/TwentyFourtyEightElement.jsx";
 import { Navigate } from "react-router-dom";
 
 
@@ -16,12 +17,16 @@ const routes = [
                 element: <Wordle maxGuesses={6} wordLength={5}/>
             },
             {
-                path: "*",
-                element: <Navigate to={"/"} replace={true} />
-            },
-            {
                 path: "/sudoku",
                 element: <SudokuElement />
+            },
+            {
+                path: "/2048",
+                element: <TwentyFourtyEightElement />
+            },
+            {
+                path: "*",
+                element: <Navigate to={"/"} replace={true} />
             }
         ]
     }
