@@ -41,10 +41,12 @@ class TwentyFourtyEight {
 
         this.#clearBoard();
         this.#score = 0;
-        this.#placeStartNumber();
-        this.#placeStartNumber();
         this.#gameLost = false;
         this.#gameWon = false;
+        const firstStartTile = this.#placeStartNumber();
+        const secondStartTile = this.#placeStartNumber();
+
+        return [firstStartTile, secondStartTile];
     };
     
     
@@ -70,7 +72,7 @@ class TwentyFourtyEight {
         }
 
         const movedTiles = this.#swipeBoard(this.#swipeUp);
-        if (Object.keys(movedTiles).length === 0 ) {
+        if (Object.keys(movedTiles).length === 0) {
             return [movedTiles, {}];
         }
 
@@ -87,7 +89,7 @@ class TwentyFourtyEight {
         }
 
         const movedTiles = this.#swipeBoard(this.#swipeRight);
-        if (Object.keys(movedTiles).length === 0 ) {
+        if (Object.keys(movedTiles).length === 0) {
             return [movedTiles, {}];
         }
 
@@ -104,7 +106,7 @@ class TwentyFourtyEight {
         }
 
         const movedTiles = this.#swipeBoard(this.#swipeDown);
-        if (Object.keys(movedTiles).length === 0 ) {
+        if (Object.keys(movedTiles).length === 0) {
             return [movedTiles, {}];
         }
 
@@ -121,7 +123,7 @@ class TwentyFourtyEight {
         }
 
         const movedTiles = this.#swipeBoard(this.#swipeLeft);
-        if (Object.keys(movedTiles).length === 0 ) {
+        if (Object.keys(movedTiles).length === 0) {
             return [movedTiles, {}];
         }
 
@@ -129,6 +131,11 @@ class TwentyFourtyEight {
         this.#updateGameStatus();
 
         return [movedTiles, filledTileCoords];
+    };
+
+
+    getScore() {
+        return this.#score;
     };
 
     
