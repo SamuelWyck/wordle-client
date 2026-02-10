@@ -1,0 +1,148 @@
+.g2048-tile-board {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+}
+
+.g2048-tile {
+    width: var(--cell-width);
+    height: var(--cell-height);
+    border-radius: var(--cell-border-radius);
+    background-color: red;
+    position: absolute;
+    /* box-shadow: 0px 0px 5px 1px black; */
+}
+
+.g2048-tile[data-row="0"] {
+    top: var(--gap);
+}
+
+.g2048-tile[data-row="1"] {
+    bottom: calc(50% + (var(--gap)/2));
+}
+
+.g2048-tile[data-row="2"] {
+    top: calc(50% + (var(--gap)/2));
+}
+
+.g2048-tile[data-row="3"] {
+    bottom: var(--gap);
+}
+
+.g2048-tile[data-col="0"] {
+    left: var(--gap);
+}
+
+.g2048-tile[data-col="1"] {
+    right: calc(50% + (var(--gap)/2));
+}
+
+.g2048-tile[data-col="2"] {
+    left: calc(50% + (var(--gap)/2));
+}
+
+.g2048-tile[data-col="3"] {
+    right: var(--gap);
+}
+
+.g2048-tile::before {
+    content: "";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: calc(var(--cell-border-radius) - 2px);
+    font-family: "roboto";
+}
+
+.g2048-tile.two::before {
+    content: "2";
+    background-color: var(--g2048-color-2);
+    font-size: clamp(2rem, 1.5rem + 3vw, 3rem);
+    font-weight: bold;
+    color: var(--g2048-text-dark);
+}
+
+.g2048-tile.four::before {
+    content: "4";
+    background-color: var(--g2048-color-4);
+    font-size: clamp(2rem, 1.5rem + 3vw, 3rem);
+    font-weight: bold;
+    color: var(--g2048-text-dark);
+}
+
+.g2048-tile.eight::before {
+    content: "8";
+    background-color: var(--g2048-color-8);
+    font-size: clamp(2rem, 1.5rem + 3vw, 3rem);
+    font-weight: bold;
+    color: var(--g2048-text-dark);
+}
+
+.g2048-tile.sixteen::before {
+    content: "16";
+    background-color: var(--g2048-color-16);
+    font-size: clamp(1.8rem, 1.2rem + 3vw, 2.7rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.thirty-two::before {
+    content: "32";
+    background-color: var(--g2048-color-32);
+    font-size: clamp(1.8rem, 1.2rem + 3vw, 2.7rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.sixty-four::before {
+    content: "64";
+    background-color: var(--g2048-color-64);
+    font-size: clamp(1.8rem, 1.2rem + 3vw, 2.7rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.one-hundred::before {
+    content: "128";
+    background-color: var(--g2048-color-128);
+    font-size: clamp(1.6rem, 1.0rem + 3vw, 2.3rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.two-hundred::before {
+    content: "256";
+    background-color: var(--g2048-color-256);
+    font-size: clamp(1.6rem, 1.0rem + 3vw, 2.3rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.five-hundred::before {
+    content: "512";
+    background-color: var(--g2048-color-512);
+    font-size: clamp(1.6rem, 1.0rem + 3vw, 2.3rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.one-thousand::before {
+    content: "1024";
+    background-color: var(--g2048-color-1024);
+    font-size: clamp(1.3rem, .8rem + 3vw, 2rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
+
+.g2048-tile.two-thousand::before {
+    content: "2048";
+    background-color: var(--g2048-color-2048);
+    font-size: clamp(1.3rem, .8rem + 3vw, 2rem);
+    font-weight: bold;
+    color: var(--g2048-text-light);
+}
