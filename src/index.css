@@ -63,6 +63,21 @@ html {
 	contrast(95%);
 
 	--text-med-filter: invert(100%) opacity(.6);
+
+	--g2048-text-dark: hsl(43, 0%, 25%);
+	--g2048-text-light: hsl(0, 0%, 88%);
+
+	--g2048-color-2: hsl(202, 45%, 65%); 
+	--g2048-color-4: hsl(71, 45%, 65%);
+	--g2048-color-8: hsl(153, 45%, 65%);
+	--g2048-color-16: hsl(244, 45%, 65%);
+	--g2048-color-32: hsl(25, 45%, 55%);
+	--g2048-color-64: hsl(0, 45%, 55%);
+	--g2048-color-128: hsl(118, 40%, 50%);
+	--g2048-color-256: hsl(218, 40%, 50%);
+	--g2048-color-512: hsl(58, 50%, 50%);
+	--g2048-color-1024: hsl(293, 40%, 48%);
+	--g2048-color-2048: hsl(158, 40%, 48%);
 }
 
 html.light {
