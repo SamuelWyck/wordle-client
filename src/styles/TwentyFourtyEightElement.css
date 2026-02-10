@@ -4,23 +4,41 @@ main.g2048 {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    overflow-x: hidden;
+    width: 100vw;
 }
 
 .g2048-board {
+    background-color: var(--text-low-color);
+    position: relative;
+
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    background-color: var(--bg-med-color);
-    gap: .5rem;
-    padding: .5rem;
+    justify-content: center;
+    align-content: center;
+
     border-radius: 20px;
+
+    --gap: clamp(4px, 2px + 1vw, 8px);
+
+    gap: var(--gap);
+    padding: var(--gap);
+
+    --cell-width: clamp(60px, 38px + 10vw, 100px);
+    --cell-height: clamp(60px, 38px + 10vw, 100px);
+    --cell-border-radius: 15px;
 }
 
 .g2048-cell {
-    width: 100px;
-    height: 100px;
-    background-color: var(--accent-color-red);
-    border-radius: 15px;
+    width: var(--cell-width);
+    height: var(--cell-height);
+    background-color: var(--bg-med-color);
+    border-radius: var(--cell-border-radius);
+}
+
+html.light .g2048-cell {
+    background-color: var(--text-low-color);
 }
 
 .g2048-game {
@@ -53,7 +71,7 @@ main.g2048 {
     width: 100px;
     height: 40px;
     cursor: pointer;
-    background-color: var(--bg-high-color);
+    background-color: var(--text-med-color);
     border: none;
     display: flex;
     border-radius: 10px;
@@ -85,4 +103,16 @@ main.g2048 {
 
 .swipe-right img {
     transform: rotate(90deg) scaleX(1.5);
+}
+
+.swipe-btn:active, .swipe-btn:hover {
+    background-color: var(--text-low-color);
+}
+
+
+
+@media only screen and (width <= 700px) {
+    .swipe-btn {
+        display: none;
+    }
 }
