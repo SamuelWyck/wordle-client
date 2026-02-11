@@ -229,6 +229,7 @@ html.light .g2048-cell {
 
 .g2048-game-options .g2048-help-btn img {
     filter: var(--text-med-filter);
+    pointer-events: none;
 }
 
 
