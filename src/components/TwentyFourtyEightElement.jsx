@@ -3,11 +3,13 @@ import "../styles/TwentyFourtyEightTile.css";
 import { useRef, useEffect } from "react";
 import arrowImg from "../assets/chevron.svg";
 import TwentyFourtyEight from "../utils/2048.js";
+import WordleMsgPopup from "./wordlePopup.jsx";
 
 
 
 function TwentyFourtyEightElement() {
     const tileCls = "g2048-tile";
+    const targetPopupCls = "target-num-popup";
     const startNumber = 2;
     const boardSize = 4;
 
@@ -26,6 +28,10 @@ function TwentyFourtyEightElement() {
     const touchStartRef = useRef(null);
     const moveTouches = useRef([]);
     const gameStarted = useRef(false);
+    const targetNumber = useRef(2048);
+    const popupref = useRef();
+    const scoreRef = useRef();
+    const bestScoreRef = useRef();
 
 
     useEffect(function() {
@@ -88,16 +94,28 @@ function TwentyFourtyEightElement() {
             }
         };
 
+
+        function closeTargetNumPopup(event) {
+            if (event.target.matches(`.${targetPopupCls}`)) {
+                return;
+            }
+            
+            const popup = document.querySelector(`.${targetPopupCls}`);
+            popup.classList.add("hidden");
+        };
+
         document.addEventListener("keydown", handleKeyPress);
         document.addEventListener("touchstart", handleTouchStart);
         document.addEventListener("touchmove", handleTouchMove);
         document.addEventListener("touchend", handleTouchEnd);
+        document.addEventListener("click", closeTargetNumPopup);
 
         return function() {
             document.removeEventListener("keydown", handleKeyPress);
             document.removeEventListener("touchstart", handleTouchStart);
             document.removeEventListener("touchmove", handleTouchMove);
             document.removeEventListener("touchend", handleTouchEnd);
+            document.removeEventListener("click", closeTargetNumPopup);
         };
     }, []);
 
@@ -189,20 +207,32 @@ function TwentyFourtyEightElement() {
         addTile(newTile.newRow, newTile.newCol, startNumber);
 
         const gameStatus = game.current.checkGameOver();
-        if (gameStatus === gameLost || gameStatus === gameWon) {
+        if (gameStatus === gameWon) {
             gameStarted.current = false;
+            popupref.current.showMessage("Great job! You won!", false);
+        } else if (gameStatus === gameLost) {
+            gameStarted.current = false;
+            popupref.current.showMessage("Better luck next time!", false);
+        }
+
+        const newScore = game.current.getScore();
+        scoreRef.current.textContent = newScore;
+        const bestScore = Number(bestScoreRef.current.textContent);
+        if (newScore > bestScore) {
+            bestScoreRef.current.textContent = newScore;
         }
     };
 
 
     function handleNewGame() {
-        const [firstTile, secondTile] = game.current.startGame(2048);
+        const [firstTile, secondTile] = game.current.startGame(targetNumber.current);
 
         tileBoardRef.current.innerHTML = "";
         addTile(firstTile.newRow, firstTile.newCol, startNumber);
         addTile(secondTile.newRow, secondTile.newCol, startNumber);
 
         gameStarted.current = true;
+        scoreRef.current.textContent = 0;
     };
 
 
@@ -224,17 +254,49 @@ function TwentyFourtyEightElement() {
     };
 
 
+    function handleGameOptions(event) {
+        if (event.target.matches(".target-btn")) {
+            event.stopPropagation();
+            const popup = document.querySelector(`.${targetPopupCls}`);
+            popup.classList.toggle("hidden");
+        } else if (event.target.matches(".g2048-new-game")) {
+            handleNewGame();
+        }
+    };
+
+
+    function handlePopupBtn(event) {
+        if (!event.target.matches(".set-target-btn")) {
+            return;
+        }
+
+        const targetNum = Number(event.target.dataset.num);
+        const targetBtn = document.querySelector(".target-btn");
+        targetBtn.dataset.target = targetNum;
+        targetNumber.current = targetNum;
+        handleNewGame();
+    };
+
+
     return (
     <main className="g2048">
-        <div className="g2048 game-options">
-            <button className="g2048-new-game" onClick={handleNewGame}>New Game</button>
-            <button className="g2048-help-btn">help</button>
+        <WordleMsgPopup ref={popupref} />
+        <div className="target-num-popup hidden" onClick={handlePopupBtn}>
+            <p>Choose Goal Number</p>
+            <button className="set-target-btn" data-num="2048">2048</button>
+            <button className="set-target-btn" data-num="1024">1024</button>
+            <button className="set-target-btn" data-num="512">512</button>
+        </div>
+        <div className="g2048-game-options" onClick={handleGameOptions}>
+            <button className="g2048-new-game">New Game</button>
+            <button className="target-btn" data-target="2048">Goal</button>
+            <button className="g2048-help-btn">Help</button>
+        </div>
+        <div className="g2048-scores">
+            <div className="g2048-current-score">Score <span ref={scoreRef}>0</span></div>
+            <div className="g2048-best-score">Best <span ref={bestScoreRef}>0</span></div>
         </div>
         <div className="g2048-game-wrapper">
-            <div className="g2048-scores">
-                <div className="g2048-current-score">Score: <span>0</span></div>
-                <div className="g2048-best-score">Best: <span>0</span></div>
-            </div>
             <div className="g2048-game" onClick={handleBoardSwipe}>
                 <button className="swipe-btn swipe-up"><img src={arrowImg} alt="arrow" /></button>
                 <div className="side-btns-wrapper">
