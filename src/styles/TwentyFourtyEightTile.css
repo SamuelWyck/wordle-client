@@ -11,9 +11,9 @@
     width: var(--cell-width);
     height: var(--cell-height);
     border-radius: var(--cell-border-radius);
-    background-color: red;
     position: absolute;
     /* box-shadow: 0px 0px 5px 1px black; */
+    transition: all .1s ease-in-out;
 }
 
 .g2048-tile[data-row="0"] {
@@ -21,7 +21,8 @@
 }
 
 .g2048-tile[data-row="1"] {
-    bottom: calc(50% + (var(--gap)/2));
+    /* bottom: calc(50% + (var(--gap)/2)); */
+    top: calc((var(--gap) * 2) + var(--cell-height));
 }
 
 .g2048-tile[data-row="2"] {
@@ -29,7 +30,8 @@
 }
 
 .g2048-tile[data-row="3"] {
-    bottom: var(--gap);
+    /* bottom: var(--gap); */
+    top: calc((var(--gap) * 4) + (var(--cell-height) * 3));
 }
 
 .g2048-tile[data-col="0"] {
@@ -37,7 +39,8 @@
 }
 
 .g2048-tile[data-col="1"] {
-    right: calc(50% + (var(--gap)/2));
+    /* right: calc(50% + (var(--gap)/2)); */
+    left: calc((var(--gap) * 2) + var(--cell-width));
 }
 
 .g2048-tile[data-col="2"] {
@@ -45,7 +48,8 @@
 }
 
 .g2048-tile[data-col="3"] {
-    right: var(--gap);
+    /* right: var(--gap); */
+    left: calc((var(--gap) * 4) + (var(--cell-width) * 3));
 }
 
 .g2048-tile::before {
@@ -59,15 +63,20 @@
     font-family: "roboto";
 }
 
-.g2048-tile.two::before {
+.g2048-tile[data-num="2"]::before {
     content: "2";
     background-color: var(--g2048-color-2);
     font-size: clamp(2rem, 1.5rem + 3vw, 3rem);
     font-weight: bold;
     color: var(--g2048-text-dark);
+
+    animation-name: pop-in;
+    animation-fill-mode: backwards;
+    animation-duration: .1s;
+    animation-timing-function: ease-in;
 }
 
-.g2048-tile.four::before {
+.g2048-tile[data-num="4"]::before {
     content: "4";
     background-color: var(--g2048-color-4);
     font-size: clamp(2rem, 1.5rem + 3vw, 3rem);
@@ -75,7 +84,7 @@
     color: var(--g2048-text-dark);
 }
 
-.g2048-tile.eight::before {
+.g2048-tile[data-num="8"]::before {
     content: "8";
     background-color: var(--g2048-color-8);
     font-size: clamp(2rem, 1.5rem + 3vw, 3rem);
@@ -83,7 +92,7 @@
     color: var(--g2048-text-dark);
 }
 
-.g2048-tile.sixteen::before {
+.g2048-tile[data-num="16"]::before {
     content: "16";
     background-color: var(--g2048-color-16);
     font-size: clamp(1.8rem, 1.2rem + 3vw, 2.7rem);
@@ -91,7 +100,7 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.thirty-two::before {
+.g2048-tile[data-num="32"]::before {
     content: "32";
     background-color: var(--g2048-color-32);
     font-size: clamp(1.8rem, 1.2rem + 3vw, 2.7rem);
@@ -99,7 +108,7 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.sixty-four::before {
+.g2048-tile[data-num="64"]::before {
     content: "64";
     background-color: var(--g2048-color-64);
     font-size: clamp(1.8rem, 1.2rem + 3vw, 2.7rem);
@@ -107,7 +116,7 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.one-hundred::before {
+.g2048-tile[data-num="128"]::before {
     content: "128";
     background-color: var(--g2048-color-128);
     font-size: clamp(1.6rem, 1.0rem + 3vw, 2.3rem);
@@ -115,7 +124,7 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.two-hundred::before {
+.g2048-tile[data-num="256"]::before {
     content: "256";
     background-color: var(--g2048-color-256);
     font-size: clamp(1.6rem, 1.0rem + 3vw, 2.3rem);
@@ -123,7 +132,7 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.five-hundred::before {
+.g2048-tile[data-num="512"]::before {
     content: "512";
     background-color: var(--g2048-color-512);
     font-size: clamp(1.6rem, 1.0rem + 3vw, 2.3rem);
@@ -131,7 +140,7 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.one-thousand::before {
+.g2048-tile[data-num="1024"]::before {
     content: "1024";
     background-color: var(--g2048-color-1024);
     font-size: clamp(1.3rem, .8rem + 3vw, 2rem);
@@ -139,10 +148,18 @@
     color: var(--g2048-text-light);
 }
 
-.g2048-tile.two-thousand::before {
+.g2048-tile[data-num="2048"]::before {
     content: "2048";
     background-color: var(--g2048-color-2048);
     font-size: clamp(1.3rem, .8rem + 3vw, 2rem);
     font-weight: bold;
     color: var(--g2048-text-light);
+}
+
+
+
+@keyframes pop-in {
+    0% {transform: scale(0); opacity: 0;}
+    80% {transform: scale(1.1); opacity: 1;}
+    100% {transform: scale(1); opacity: 1;}
 }
