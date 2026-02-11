@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import arrowImg from "../assets/chevron.svg";
 import TwentyFourtyEight from "../utils/2048.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
+import TwentyFourtyEightPopup from "./TwentyFourtyEightPopup.jsx";
 
 
 
@@ -32,6 +33,7 @@ function TwentyFourtyEightElement() {
     const popupref = useRef();
     const scoreRef = useRef();
     const bestScoreRef = useRef();
+    const rulesPopupShowing = useRef(false);
 
 
     useEffect(function() {
@@ -256,12 +258,24 @@ function TwentyFourtyEightElement() {
 
     function handleGameOptions(event) {
         if (event.target.matches(".target-btn")) {
+            if (rulesPopupShowing.current) {
+                return;
+            }
             event.stopPropagation();
             const popup = document.querySelector(`.${targetPopupCls}`);
             popup.classList.toggle("hidden");
         } else if (event.target.matches(".g2048-new-game")) {
             handleNewGame();
+        } else if (event.target.matches(".g2048-help-btn")) {
+            const popup = document.querySelector(".g2048-rules-popup");
+            popup.classList.toggle("hidden");
+            rulesPopupShowing.current = !rulesPopupShowing.current;
         }
+    };
+
+
+    function rulesPopupCallback() {
+        rulesPopupShowing.current = false;
     };
 
 
@@ -281,6 +295,7 @@ function TwentyFourtyEightElement() {
     return (
     <main className="g2048">
         <WordleMsgPopup ref={popupref} />
+        <TwentyFourtyEightPopup closeCb={rulesPopupCallback} />
         <div className="target-num-popup hidden" onClick={handlePopupBtn}>
             <p>Choose Goal Number</p>
             <button className="set-target-btn" data-num="2048">2048</button>
