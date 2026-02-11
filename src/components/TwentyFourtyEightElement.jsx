@@ -6,6 +6,7 @@ import helpImg from "../assets/help.svg";
 import TwentyFourtyEight from "../utils/2048.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
 import TwentyFourtyEightPopup from "./TwentyFourtyEightPopup.jsx";
+import storageManager from "../utils/storageManager.js";
 
 
 
@@ -27,10 +28,13 @@ function TwentyFourtyEightElement() {
 
     const game = useRef(new TwentyFourtyEight(boardSize, boardSize, startNumber));
     const tileBoardRef = useRef();
+
     const touchStartRef = useRef(null);
     const moveTouches = useRef([]);
+
     const gameStarted = useRef(false);
     const targetNumber = useRef(2048);
+
     const popupref = useRef();
     const scoreRef = useRef();
     const bestScoreRef = useRef();
@@ -38,6 +42,8 @@ function TwentyFourtyEightElement() {
 
 
     useEffect(function() {
+        loadGame();
+
         function handleTouchStart(event) {
             if (!gameStarted.current) {
                 return;
@@ -121,6 +127,46 @@ function TwentyFourtyEightElement() {
             document.removeEventListener("click", closeTargetNumPopup);
         };
     }, []);
+
+
+    function loadGame() {
+        const board = storageManager.get2048Board();
+        if (board === null) {
+            return;
+        }
+
+        for (let row = 0; row < board.length; row += 1) {
+            for (let col = 0; col < board[0].length; col += 1) {
+                const number  = board[row][col];
+                if (number === 0) {
+                    continue;
+                }
+                addTile(row, col, number);
+            }
+        }
+        game.current.setBoard(board);
+
+        const bestScore = storageManager.get2048BestScore();
+        if (bestScore !== null) {
+            bestScoreRef.current.textContent = bestScore;
+        }
+
+        const score = storageManager.get2048Score();
+        if (score !== null) {
+            scoreRef.current.textContent = score;
+            game.current.setScore(score);
+        }
+
+        const targetNum = storageManager.get2048Goal();
+        targetNumber.current = targetNum;
+        game.current.setTargetNumber(targetNum);
+        if (targetNum !== null) {
+            const goalBtn = document.querySelector(".target-btn");
+            goalBtn.dataset.target = targetNum;
+        }
+
+        gameStarted.current = true;
+    };
 
 
     function handleTouchSwipe(touch) {
@@ -208,6 +254,8 @@ function TwentyFourtyEightElement() {
         }
         
         addTile(newTile.newRow, newTile.newCol, startNumber);
+        const board = game.current.getBoard();
+        storageManager.save2048Board(board);
 
         const gameStatus = game.current.checkGameOver();
         if (gameStatus === gameWon) {
@@ -219,10 +267,12 @@ function TwentyFourtyEightElement() {
         }
 
         const newScore = game.current.getScore();
+        storageManager.save2048Score(newScore);
         scoreRef.current.textContent = newScore;
         const bestScore = Number(bestScoreRef.current.textContent);
         if (newScore > bestScore) {
             bestScoreRef.current.textContent = newScore;
+            storageManager.save2048BestScore(newScore);
         }
     };
 
@@ -236,6 +286,9 @@ function TwentyFourtyEightElement() {
 
         gameStarted.current = true;
         scoreRef.current.textContent = 0;
+
+        const board = game.current.getBoard();
+        storageManager.save2048Board(board);
     };
 
 
@@ -290,6 +343,7 @@ function TwentyFourtyEightElement() {
         targetBtn.dataset.target = targetNum;
         targetNumber.current = targetNum;
         handleNewGame();
+        storageManager.save2048Goal(targetNumber.current);
     };
 
 
