@@ -221,6 +221,16 @@ html.light .g2048-cell {
     border-radius: 10px;
 }
 
+.g2048-game-options .g2048-help-btn {
+    width: 40px;
+    padding: .1rem;
+    display: flex;
+}
+
+.g2048-game-options .g2048-help-btn img {
+    filter: var(--text-med-filter);
+}
+
 
 
 @media only screen and (width <= 1000px) {
