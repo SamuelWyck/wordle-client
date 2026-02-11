@@ -333,7 +333,7 @@ class TwentyFourtyEight {
         if (firstCall && finalPosInfo === null) {
             return null;
         } else if (finalPosInfo === null) {
-            return {row: row, col: col, num:numToMove};
+            return {row: row, col: col, num: numToMove};
         }
         return finalPosInfo;
     };
