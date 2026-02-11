@@ -2,6 +2,7 @@ import "../styles/TwentyFourtyEightElement.css";
 import "../styles/TwentyFourtyEightTile.css";
 import { useRef, useEffect } from "react";
 import arrowImg from "../assets/chevron.svg";
+import helpImg from "../assets/help.svg";
 import TwentyFourtyEight from "../utils/2048.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
 import TwentyFourtyEightPopup from "./TwentyFourtyEightPopup.jsx";
@@ -305,7 +306,7 @@ function TwentyFourtyEightElement() {
         <div className="g2048-game-options" onClick={handleGameOptions}>
             <button className="g2048-new-game">New Game</button>
             <button className="target-btn" data-target="2048">Goal</button>
-            <button className="g2048-help-btn">Help</button>
+            <button className="g2048-help-btn"><img src={helpImg} alt="help" /></button>
         </div>
         <div className="g2048-scores">
             <div className="g2048-current-score">Score <span ref={scoreRef}>0</span></div>
