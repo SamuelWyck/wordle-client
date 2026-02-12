@@ -1,9 +1,16 @@
 class StorageManager {
     #wordleStorageKey = "wordle-session-id";
     #colorModeKey = "braingames-color-mode";
+
     #sudokuGameKey = "sudoku-game";
     #sudokuStartBoardKey = "sudoku-starting";
     #sudouCompleteBoardKey = "sudoku-complete";
+
+    #twentyFEBestScoreKey = "2048-highscore";
+    #twentyFEScoreKey = "2048-score";
+    #twentyFEGoalKey = "2048-goal";
+    #twentyFEBoardKey = "2048-board";
+
     #storage = localStorage;
 
     
@@ -62,6 +69,55 @@ class StorageManager {
     saveSudokuCompletedBoard(completedBoard) {
         completedBoard = JSON.stringify(completedBoard);
         this.#storage.setItem(this.#sudouCompleteBoardKey, completedBoard);
+    };
+
+    get2048BestScore() {
+        let score = this.#storage.getItem(this.#twentyFEBestScoreKey);
+        if (score !== null) {
+            score = Number(score);
+        }
+        return score;
+    };
+
+    save2048BestScore(score) {
+        this.#storage.setItem(this.#twentyFEBestScoreKey, score);
+    };
+
+    get2048Goal() {
+        let goal = this.#storage.getItem(this.#twentyFEGoalKey);
+        if (goal !== null) {
+            goal = Number(goal);
+        }
+        return goal;
+    };
+
+    save2048Goal(goal) {
+        this.#storage.setItem(this.#twentyFEGoalKey, goal);
+    };
+
+    get2048Board() {
+        let board = this.#storage.getItem(this.#twentyFEBoardKey);
+        if (board !== null) {
+            board = JSON.parse(board);
+        }
+        return board;
+    };
+
+    save2048Board(board) {
+        board = JSON.stringify(board);
+        this.#storage.setItem(this.#twentyFEBoardKey, board);
+    };
+
+    get2048Score() {
+        let score = this.#storage.getItem(this.#twentyFEScoreKey);
+        if (score !== null) {
+            score = Number(score);
+        }
+        return score;
+    };
+
+    save2048Score(score) {
+        this.#storage.setItem(this.#twentyFEScoreKey, score);
     };
 };
 
