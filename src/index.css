@@ -133,3 +133,13 @@ html.light {
 
 	--text-med-filter: brightness(0) opacity(.6);
 }
+
+main {
+	width: 100%;
+	height: calc(100vh - 66px);
+	
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scroll-behavior: smooth;
+	scrollbar-color: var(--accent-color-red) rgb(0, 0, 0, 0);
+}
