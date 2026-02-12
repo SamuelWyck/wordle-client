@@ -92,7 +92,7 @@ function Header() {
                 <img src={menuImg} alt="menu" />
             </button>
             <nav className="header-nav">
-                <Link to={"/"}>Wordle</Link>
+                <Link to={"/wordle"}>Wordle</Link>
                 <Link to={"/sudoku"}>Sudoku</Link>
                 <Link to={"/2048"}>2048</Link>
             </nav>
