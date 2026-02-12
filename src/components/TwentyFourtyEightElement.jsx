@@ -5,7 +5,7 @@ import arrowImg from "../assets/chevron.svg";
 import helpImg from "../assets/help.svg";
 import TwentyFourtyEight from "../utils/2048.js";
 import WordleMsgPopup from "./wordlePopup.jsx";
-import TwentyFourtyEightPopup from "./TwentyFourtyEightPopup.jsx";
+import TwentyFourtyEightPopup from "./twentyFourtyEightPopup.jsx";
 import storageManager from "../utils/storageManager.js";
 
 
