@@ -55,6 +55,25 @@ class TwentyFourtyEight {
     };
 
 
+    setBoard(board) {
+        for (let row = 0; row < this.#board.length; row += 1) {
+            for (let col = 0; col < this.#board[0].length; col += 1) {
+                const newNumber = board[row][col];
+                this.#board[row][col] = newNumber;
+            }
+        }
+    };
+
+
+    setTargetNumber(targetNumber) {
+        if (!this.#validTargetNums.has(targetNumber)) {
+            return;
+        }
+
+        this.#targetNumber = targetNumber;
+    };
+
+
     checkGameOver() {
         if (this.#gameWon) {
             return 1;
@@ -136,6 +155,11 @@ class TwentyFourtyEight {
 
     getScore() {
         return this.#score;
+    };
+
+
+    setScore(score) {
+        this.#score = score;
     };
 
     
