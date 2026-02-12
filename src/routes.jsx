@@ -4,6 +4,7 @@ import Wordle from "./components/wordle.jsx";
 import SudokuElement from "./components/sudokuElement.jsx";
 import TwentyFourtyEightElement from "./components/TwentyFourtyEightElement.jsx";
 import { Navigate } from "react-router-dom";
+import HomePage from "./components/homePage.jsx";
 
 
 
@@ -14,6 +15,10 @@ const routes = [
         children: [
             {
                 index: true,
+                element: <HomePage />
+            },
+            {
+                path: "/wordle",
                 element: <Wordle maxGuesses={6} wordLength={5}/>
             },
             {
