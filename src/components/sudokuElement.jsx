@@ -461,6 +461,7 @@ function SudokuElement() {
         
         currentCellRef.current.classList.remove(activeCellCls);
         currentCellRef.current = null;
+        clearHighlightedCells();
     };
 
     
