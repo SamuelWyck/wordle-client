@@ -185,7 +185,7 @@ function SudokuElement() {
 
             const oldNum = cell.textContent;
             const oldHTML = cell.innerHTML;
-            if (oldNum in numsRemaining.current) {
+            if (oldNum in numsRemaining.current && oldHTML in numsRemaining.current) {
                 numsRemaining.current[oldNum] += 1;
                 const addCls = true;
                 toggleCompletedNumBtn(oldNum, !addCls);
